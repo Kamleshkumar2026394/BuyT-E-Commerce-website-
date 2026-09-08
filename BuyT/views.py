@@ -51,70 +51,70 @@ def home(request):
        "brands":brands
     })
 
-def sign(request):
+@require_POST
+def send_signup_otp(request):
 
-    if request.method == "POST":
+    email = request.POST.get("email", "").strip()
 
-        Full_Name = request.POST.get("fullname", "").strip()
-        Email = request.POST.get("email", "").strip()
-        Phone = request.POST.get("phone", "").strip()
-        Password = request.POST.get("password")
-        confirm_password = request.POST.get("confirm_password")
+    if not email:
+        return JsonResponse({
+            "success": False,
+            "message": "Please enter your email."
+        })
 
-        # Required fields
-        if not Full_Name or not Email or not Phone or not Password:
-            messages.error(request, "All fields are required.")
-            return redirect("sign")
+    # Check existing email
+    if signup.objects.filter(Email=email).exists():
+        return JsonResponse({
+            "success": False,
+            "message": "Email already registered."
+        })
 
-        # Password match
-        if Password != confirm_password:
-            messages.error(request, "Passwords do not match.")
-            return redirect("sign")
+    # Generate OTP
+    otp = str(random.randint(100000, 999999))
 
-        # Email already exists
-        if signup.objects.filter(Email=Email).exists():
-            messages.error(request, "Email already registered.")
-            return redirect("sign")
+    # Send email
+    try:
 
-        # Phone already exists
-        if signup.objects.filter(Phone=Phone).exists():
-            messages.error(request, "Phone number already registered.")
-            return redirect("sign")
+        email_message = EmailMessage(
+            subject="BuyT Email Verification OTP",
+            body=f"""
+Hello,
 
-        # Check whether this email was verified
-        verified_email = request.session.get(
-            "signup_verified_email"
+Your BuyT email verification OTP is:
+
+{otp}
+
+This OTP is valid for 5 minutes.
+
+Please enter this OTP on the BuyT signup page.
+
+Regards,
+BuyT Team
+""",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[email],
         )
 
-        if verified_email != Email:
-            messages.error(
-                request,
-                "Please verify your email with OTP first."
-            )
-            return redirect("sign")
+        email_message.send(fail_silently=False)
 
-        # Create account only after OTP verification
-        signup.objects.create(
-            Full_Name=Full_Name,
-            Email=Email,
-            Phone=Phone,
-            Password=make_password(Password)
-        )
+    except Exception as e:
 
-        # Clear verification session
-        request.session.pop(
-            "signup_verified_email",
-            None
-        )
+        print("SIGNUP OTP EMAIL ERROR:", repr(e))
 
-        messages.success(
-            request,
-            "Email verified and account created successfully. Please login."
-        )
+        return JsonResponse({
+            "success": False,
+            "message": "Unable to send OTP. Please try again later."
+        }, status=500)
 
-        return redirect("login")
+    # Store OTP ONLY after email was successfully sent
+    request.session["signup_email"] = email
+    request.session["signup_otp"] = otp
+    request.session["signup_otp_time"] = time.time()
 
-    return render(request, "sign.html")
+    return JsonResponse({
+        "success": True,
+        "message": "OTP sent successfully."
+    })
 
 @require_POST
 def send_signup_otp(request):
