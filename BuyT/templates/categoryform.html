@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'categoryform.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="brand-container">
+    <h2>Add Category</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="category_name">Category Name</label>
+            <input
+                type="text"
+                id="category_name"
+                name="category_name"
+                placeholder="Enter Category Name"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="category_image">Category Image</label>
+            <input
+                type="text"
+                id="category_image"
+                name="category_image"
+                placeholder="Enter image link"
+                required
+            >
+        </div>
+
+        <button type="submit">Add Brand</button>
+    </form>
+</div>
+
+{% endblock %}

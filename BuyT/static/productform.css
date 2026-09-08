@@ -1,0 +1,278 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:linear-gradient(135deg,#eef2f7,#dce7f5);
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* ===========================
+   FORM CONTAINER
+=========================== */
+
+.form-container{
+    width:100%;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px 20px;
+}
+
+/* ===========================
+   FORM BOX
+=========================== */
+
+.product-form{
+    width:100%;
+    max-width:700px;
+    background:#fff;
+    padding:40px;
+    border-radius:18px;
+    box-shadow:0 15px 40px rgba(0,0,0,.15);
+    border-top:6px solid #ff6b00;
+}
+
+/* ===========================
+   TITLE
+=========================== */
+
+.product-form h2{
+    text-align:center;
+    color:#222;
+    font-size:34px;
+    margin-bottom:30px;
+    font-weight:700;
+}
+
+/* ===========================
+   FORM GROUP
+=========================== */
+
+.form-group{
+    margin-bottom:22px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:8px;
+    font-size:15px;
+    font-weight:600;
+    color:#444;
+}
+
+/* ===========================
+   INPUTS
+=========================== */
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    width:100%;
+    padding:14px 16px;
+    border:1px solid #d9d9d9;
+    border-radius:10px;
+    font-size:15px;
+    background:#fafafa;
+    outline:none;
+    transition:.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+    border-color:#ff6b00;
+    background:#fff;
+    box-shadow:0 0 10px rgba(255,107,0,.2);
+}
+
+/* File Upload */
+
+input[type="file"]{
+    padding:12px;
+    background:#fff;
+    cursor:pointer;
+}
+
+/* Textarea */
+
+textarea{
+    resize:vertical;
+    min-height:120px;
+}
+
+/* ===========================
+   BUTTON
+=========================== */
+
+button{
+    width:100%;
+    padding:15px;
+    background:#ff6b00;
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    font-size:18px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+    margin-top:10px;
+}
+
+button:hover{
+    background:#e65c00;
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(255,107,0,.3);
+}
+
+/* Placeholder */
+
+::placeholder{
+    color:#999;
+}
+
+/* ===========================
+   Large Laptop
+=========================== */
+
+@media(max-width:1200px){
+
+.product-form{
+    max-width:650px;
+}
+
+}
+
+/* ===========================
+   Laptop
+=========================== */
+
+@media(max-width:992px){
+
+.product-form{
+    max-width:600px;
+    padding:35px;
+}
+
+.product-form h2{
+    font-size:32px;
+}
+
+}
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media(max-width:768px){
+
+.form-container{
+    padding:30px 15px;
+}
+
+.product-form{
+    max-width:100%;
+    padding:30px;
+}
+
+.product-form h2{
+    font-size:28px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    padding:13px;
+}
+
+button{
+    padding:14px;
+    font-size:17px;
+}
+
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media(max-width:576px){
+
+.form-container{
+    padding:20px 12px;
+}
+
+.product-form{
+    padding:22px;
+    border-radius:12px;
+}
+
+.product-form h2{
+    font-size:24px;
+    margin-bottom:25px;
+}
+
+.form-group{
+    margin-bottom:18px;
+}
+
+.form-group label{
+    font-size:14px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    padding:12px;
+    font-size:14px;
+}
+
+button{
+    font-size:16px;
+    padding:13px;
+}
+
+}
+
+/* ===========================
+   Small Mobile
+=========================== */
+
+@media(max-width:360px){
+
+.product-form{
+    padding:18px;
+}
+
+.product-form h2{
+    font-size:22px;
+}
+
+.form-group label{
+    font-size:13px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+    font-size:13px;
+}
+
+button{
+    font-size:15px;
+    padding:12px;
+}
+
+}

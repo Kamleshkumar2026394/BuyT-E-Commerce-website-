@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: Arial, sans-serif;
+
+    background: #111827;
+}
+
+.role-container {
+    width: 100%;
+    padding: 20px;
+}
+
+.role-card {
+    max-width: 750px;
+    margin: auto;
+
+    background: white;
+
+    padding: 50px;
+
+    border-radius: 20px;
+
+    text-align: center;
+}
+
+.role-card h1 {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+.role-card > p {
+    color: #666;
+    margin-bottom: 35px;
+}
+
+.roles {
+    display: flex;
+    gap: 25px;
+}
+
+.role {
+    flex: 1;
+
+    padding: 35px 20px;
+
+    text-decoration: none;
+
+    color: #111;
+
+    border: 2px solid #ddd;
+
+    border-radius: 15px;
+
+    transition: 0.3s;
+}
+
+.icon {
+    font-size: 50px;
+}
+
+.role h2 {
+    margin: 15px 0 10px;
+}
+
+.role p {
+    color: #666;
+    line-height: 1.5;
+}
+
+.role:hover {
+    transform: translateY(-8px);
+}
+
+.user:hover {
+    border-color: #2563eb;
+}
+
+.admin:hover {
+    border-color: #dc2626;
+}
+
+@media (max-width: 600px) {
+
+    .roles {
+        flex-direction: column;
+    }
+
+    .role-card {
+        padding: 30px 20px;
+    }
+}

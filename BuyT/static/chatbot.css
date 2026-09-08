@@ -1,0 +1,314 @@
+/* =================================
+   FLOATING BUTTON GROUP
+================================= */
+
+.floating-tools {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+
+    width: 65px;
+    height: 65px;
+
+    z-index: 9999;
+}
+
+
+/* Main button */
+
+.tools-main {
+    position: absolute;
+
+    right: 0;
+    bottom: 0;
+
+    width: 60px;
+    height: 60px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #111827;
+    color: white;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    z-index: 3;
+
+    transition: transform .3s;
+}
+
+
+/* Theme button */
+
+.floating-tools .theme-btn {
+    position: absolute;
+
+    right: 5px;
+    bottom: 70px;
+
+    width: 50px;
+    height: 50px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #f59e0b;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(20px);
+
+    transition: .3s;
+}
+
+
+/* Chatbot button */
+
+.floating-tools .chatbot-toggle {
+    position: absolute;
+
+    right: 65px;
+    bottom: 5px;
+
+    width: 50px;
+    height: 50px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #0d6efd;
+    color: white;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateX(20px);
+
+    transition: .3s;
+}
+
+
+/* Show buttons */
+
+.floating-tools:hover .theme-btn,
+.floating-tools:hover .chatbot-toggle {
+
+    opacity: 1;
+    visibility: visible;
+
+    transform: translate(0);
+}
+
+
+/* Main button animation */
+
+.floating-tools:hover .tools-main {
+    transform: rotate(90deg);
+}
+
+
+/* =================================
+   YOUR ORIGINAL CHATBOT WINDOW
+================================= */
+
+.chatbot-window {
+
+    position: fixed;
+
+    right: 25px;
+    bottom: 95px;
+
+    width: 360px;
+    height: 500px;
+
+    background: white;
+
+    border-radius: 15px;
+
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+
+    display: none;
+
+    flex-direction: column;
+
+    overflow: hidden;
+
+    z-index: 9998;
+}
+
+
+/* Header */
+
+.chatbot-header {
+
+    background: #0d6efd;
+
+    color: white;
+
+    padding: 15px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.chatbot-header h3 {
+    margin: 0;
+}
+
+.chatbot-header span {
+    font-size: 12px;
+    opacity: .8;
+}
+
+.chatbot-close {
+
+    background: transparent;
+
+    border: none;
+
+    color: white;
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+
+
+/* Messages */
+
+.chatbot-messages {
+
+    flex: 1;
+
+    padding: 15px;
+
+    overflow-y: auto;
+
+    background: #f5f5f5;
+}
+
+
+/* Bot message */
+
+.bot-message {
+
+    background: white;
+
+    padding: 10px 13px;
+
+    border-radius: 12px;
+
+    margin-bottom: 10px;
+
+    max-width: 85%;
+
+    color: #222;
+
+    font-size: 14px;
+
+    box-shadow: 0 2px 5px rgba(0,0,0,.08);
+}
+
+
+/* User message */
+
+.user-message {
+
+    background: #0d6efd;
+
+    color: white;
+
+    padding: 10px 13px;
+
+    border-radius: 12px;
+
+    margin-bottom: 10px;
+
+    margin-left: auto;
+
+    max-width: 85%;
+
+    font-size: 14px;
+}
+
+
+/* Input */
+
+.chatbot-input {
+
+    display: flex;
+
+    padding: 10px;
+
+    border-top: 1px solid #ddd;
+
+    background: white;
+}
+
+.chatbot-input input {
+
+    flex: 1;
+
+    padding: 11px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 8px;
+
+    outline: none;
+}
+
+.chatbot-input button {
+
+    width: 45px;
+
+    margin-left: 8px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #0d6efd;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+
+/* Mobile */
+
+@media (max-width: 500px) {
+
+    .chatbot-window {
+
+        right: 10px;
+        bottom: 85px;
+
+        width: calc(100% - 20px);
+
+        height: 70vh;
+    }
+
+    .floating-tools {
+
+        right: 15px;
+        bottom: 15px;
+    }
+
+}

@@ -1,0 +1,384 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>BuyT Admin Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{% static 'admin.css' %}">
+
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            BuyT
+            <span>Admin</span>
+        </div>
+
+        <nav>
+
+            <a href="{% url 'admin_dashboard' %}">
+                📊 Dashboard
+            </a>
+
+            <a href="{% url 'admin_users' %}">
+                👤 Users
+            </a>
+
+            <a href="{% url 'admin_products' %}">
+                📦 Products
+            </a>
+
+            <a href="{% url 'admin_categories' %}">
+                🏷️ Categories
+            </a>
+
+            <a href="{% url 'admin_brands' %}">
+                🔖 Brands
+            </a>
+
+            <a href="{% url 'admin_orders' %}">
+                🛒 Orders
+            </a>
+
+            <a href="{% url 'admin_payments' %}">
+                💳 Payments
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="#">
+                ⚙️ Settings
+            </a>
+
+            <a href="{% url 'admin_logout' %}">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+        <button class="admin-menu-btn" id="adminMenuBtn">
+                ☰
+        </button>
+        <header class="topbar">
+
+            <div class="dash">
+
+                <h1>Dashboard</h1>
+
+                <p>
+                    Welcome to BuyT Admin Panel
+                </p>
+
+            </div>
+
+            <div class="admin-profile">
+
+                <div class="avatar">
+                    <a href="{% url 'admin_profile' %}">K</a>
+                </div>
+
+                <span>Administrator</span>
+
+            </div>
+
+        </header>
+
+
+        <!-- STATISTICS -->
+         <section class="stats">
+            <div class="stat-card">
+                <div class="dashboard-card">
+                    <h3>Total Orders</h3>
+                    <p>{{ total_orders }}</p>
+                    <br>
+                    <a href="{% url 'admin_orders' %}">
+                        View Orders
+                    </a>
+                </div>
+                </div>
+
+                    <div class="stat-card">
+                        <div class="dashboard-card">
+                        <h3>Cancelled Orders</h3>
+                        <p>{{ cancelled_orders }}</p>
+                    </div>
+                    </div>
+                
+                <div class="stat-card">
+                    <div class="dashboard-card">
+                        <h3>Total Payments</h3>
+                        <p>₹{{ total_payments }}</p>
+                        <a href="{% url 'admin_payments' %}">
+                            View Payments
+                        </a>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="dashboard-card">
+                        <h3>Pending Payments</h3>
+                        <p>{{ pending_payments }}</p>
+                    </div>
+                </div>
+
+         </section>
+
+        <section class="stats">
+
+            
+
+                <div class="stat-card">
+                <div class="stat-icon">
+                    👤
+                </div>
+
+                <div>
+
+                    <h3>
+                        {{ total_users }}
+                    </h3>
+
+                    <p>Total Users</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📦
+                </div>
+
+                <div>
+
+                    <h3>
+                        {{ total_products }}
+                    </h3>
+
+                    <p>Total Products</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🏷️
+                </div>
+
+                <div>
+
+                    <h3>
+                        {{ total_categories }}
+                    </h3>
+
+                    <p>Categories</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🔖
+                </div>
+
+                <div>
+
+                    <h3>
+                        {{ total_brands }}
+                    </h3>
+
+                    <p>Brands</p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <section class="section">
+
+            <div class="section-header">
+
+                <h2>Quick Actions</h2>
+
+            </div>
+
+
+            <div class="quick-actions">
+
+                <a href="{% url 'addproduct' %}">
+                    <span>➕</span>
+                    Add Product
+                </a>
+
+                <a href="{% url 'addcategory' %}">
+                    <span>🏷️</span>
+                    Add Category
+                </a>
+
+                <a href="{% url 'addbrand' %}">
+                    <span>🔖</span>
+                    Add Brand
+                </a>
+
+                <a href="{% url 'admin_users' %}">
+                    <span>👤</span>
+                    Manage Users
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- MANAGEMENT -->
+
+        <section class="section">
+
+            <div class="section-header">
+
+                <h2>Management</h2>
+
+            </div>
+
+
+            <div class="management-grid">
+
+                <div class="management-card">
+
+                    <h3>Users</h3>
+
+                    <p>
+                        Manage BuyT customers,
+                        accounts and profiles.
+                    </p>
+
+                    <a href="{% url 'admin_users' %}">
+                        Manage Users →
+                    </a>
+
+                </div>
+
+
+                <div class="management-card">
+
+                    <h3>Products</h3>
+
+                    <p>
+                        Add, edit, delete and
+                        manage product inventory.
+                    </p>
+
+                    <a href="{% url 'admin_products' %}">
+                        Manage Products →
+                    </a>
+
+                </div>
+
+
+                <div class="management-card">
+
+                    <h3>Orders</h3>
+
+                    <p>
+                        Track customer orders
+                        and update order status.
+                    </p>
+
+                    <a href="#">
+                        Manage Orders →
+                    </a>
+
+                </div>
+
+
+                <div class="management-card">
+
+                    <h3>Payments</h3>
+
+                    <p>
+                        Monitor payment status
+                        and transactions.
+                    </p>
+
+                    <a href="#">
+                        Manage Payments →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+<div class="admin-overlay" id="adminOverlay"></div>
+<script>
+    const adminMenuBtn = document.getElementById("adminMenuBtn");
+    const sidebar = document.querySelector(".sidebar");
+    const adminOverlay = document.getElementById("adminOverlay");
+
+    adminMenuBtn.addEventListener("click", function () {
+
+        sidebar.classList.toggle("active");
+        adminMenuBtn.classList.toggle("sidebar-open");
+        adminOverlay.classList.toggle("active");
+
+        if (sidebar.classList.contains("active")) {
+            adminMenuBtn.innerHTML = "✕";
+        } else {
+            adminMenuBtn.innerHTML = "☰";
+        }
+
+    });
+
+    adminOverlay.addEventListener("click", function () {
+
+        sidebar.classList.remove("active");
+        adminOverlay.classList.remove("active");
+
+        adminMenuBtn.innerHTML = "☰";
+
+    });
+</script>
+
+</body>
+
+</html>

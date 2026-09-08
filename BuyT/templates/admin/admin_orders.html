@@ -1,0 +1,315 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Orders - BuyT Admin</title>
+
+    <link rel="stylesheet"
+          href="{% static 'admin.css' %}">
+
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            BuyT
+            <span>Admin</span>
+        </div>
+
+        <nav>
+
+            <a href="{% url 'admin_dashboard' %}">
+                📊 Dashboard
+            </a>
+
+            <a href="{% url 'admin_users' %}">
+                👤 Users
+            </a>
+
+            <a href="{% url 'admin_products' %}">
+                📦 Products
+            </a>
+
+            <a href="{% url 'admin_categories' %}">
+                🏷️ Categories
+            </a>
+
+            <a href="{% url 'admin_brands' %}">
+                🔖 Brands
+            </a>
+
+            <a href="{% url 'admin_orders' %}" class="active">
+                🛒 Orders
+            </a>
+
+            <a href="{% url 'admin_payments' %}">
+                💳 Payments
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="#">
+                ⚙️ Settings
+            </a>
+            <a href="{% url 'admin_logout' %}">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+        <button class="admin-menu-btn" id="adminMenuBtn">
+                ☰
+        </button>
+        <header class="topbar">
+
+            <div class="dash">
+
+                <h1>Orders</h1>
+
+                <p>Manage customer orders</p>
+
+            </div>
+
+        </header>
+
+
+        <!-- MESSAGES -->
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+        <!-- ORDERS SECTION -->
+
+        <section class="section">
+
+            <div class="section-header">
+
+                <h2>All Orders</h2>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table class="admin-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Order ID</th>
+
+                            <th>Customer</th>
+
+                            <th>Amount</th>
+
+                            <th>Payment</th>
+
+                            <th>Order Status</th>
+
+                            <th>Date</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for order in orders %}
+
+                        <tr>
+
+                            <!-- ORDER ID -->
+
+                            <td>
+                                #{{ order.id }}
+                            </td>
+
+
+                            <!-- CUSTOMER -->
+
+                            <td>
+
+                                <strong>
+                                    {{ order.user.Full_Name }}
+                                </strong>
+
+                                <br>
+
+                                <small>
+                                    {{ order.user.Email }}
+                                </small>
+
+                            </td>
+
+
+                            <!-- AMOUNT -->
+
+                            <td>
+
+                                ₹{{ order.total_amount }}
+
+                            </td>
+
+
+                            <!-- PAYMENT -->
+
+                            <td>
+
+                                <span class="status-badge">
+
+                                    {{ order.payment_status }}
+
+                                </span>
+
+                                <br>
+
+                                <small>
+                                    {{ order.payment_method }}
+                                </small>
+
+                            </td>
+
+
+                            <!-- ORDER STATUS -->
+
+                            <td>
+
+                                <span class="status-badge">
+
+                                    {{ order.order_status }}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- DATE -->
+
+                            <td>
+
+                                {{ order.created_at|date:"d M Y" }}
+
+                                <br>
+
+                                <small>
+                                    {{ order.created_at|date:"h:i A" }}
+                                </small>
+
+                            </td>
+
+
+                            <!-- ACTION -->
+
+                            <td>
+
+                                <div class="card-actions">
+
+                                    <a
+                                        href="{% url 'admin_order_detail' order.id %}"
+                                        class="btn btn-edit">
+
+                                        👁️ View
+
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="7"
+                                class="empty">
+
+                                No orders found.
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+<div class="admin-overlay" id="adminOverlay"></div>
+<script>
+    const adminMenuBtn = document.getElementById("adminMenuBtn");
+    const sidebar = document.querySelector(".sidebar");
+    const adminOverlay = document.getElementById("adminOverlay");
+
+    adminMenuBtn.addEventListener("click", function () {
+
+        sidebar.classList.toggle("active");
+        adminMenuBtn.classList.toggle("sidebar-open");
+        adminOverlay.classList.toggle("active");
+
+        if (sidebar.classList.contains("active")) {
+            adminMenuBtn.innerHTML = "✕";
+        } else {
+            adminMenuBtn.innerHTML = "☰";
+        }
+
+    });
+
+    adminOverlay.addEventListener("click", function () {
+
+        sidebar.classList.remove("active");
+        adminOverlay.classList.remove("active");
+
+        adminMenuBtn.innerHTML = "☰";
+
+    });
+</script>
+
+</body>
+
+</html>

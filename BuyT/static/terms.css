@@ -1,0 +1,199 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#f4f7fc;
+    color:#333;
+    line-height:1.8;
+    overflow-x:hidden;
+}
+
+/* ==========================
+        TERMS CONTAINER
+========================== */
+
+.terms-container{
+    width:90%;
+    max-width:1000px;
+    margin:50px auto;
+    background:#fff;
+    padding:40px;
+    border-radius:12px;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+}
+
+/* ==========================
+          HEADINGS
+========================== */
+
+h1{
+    text-align:center;
+    color:#0d6efd;
+    margin-bottom:10px;
+    font-size:40px;
+}
+
+.updated{
+    text-align:center;
+    color:#777;
+    margin-bottom:35px;
+    font-style:italic;
+    font-size:16px;
+}
+
+section{
+    margin-bottom:30px;
+}
+
+h2{
+    color:#222;
+    margin-bottom:15px;
+    border-left:5px solid #0d6efd;
+    padding-left:12px;
+    font-size:28px;
+}
+
+/* ==========================
+            TEXT
+========================== */
+
+p{
+    margin-bottom:15px;
+    text-align:justify;
+    font-size:16px;
+}
+
+ul{
+    margin-left:25px;
+    margin-bottom:15px;
+}
+
+li{
+    margin-bottom:10px;
+    font-size:16px;
+}
+
+/* ==========================
+      Large Tablet
+========================== */
+
+@media (max-width:992px){
+
+.terms-container{
+    width:92%;
+    padding:35px;
+}
+
+h1{
+    font-size:36px;
+}
+
+h2{
+    font-size:26px;
+}
+
+}
+
+/* ==========================
+          Tablet
+========================== */
+
+@media (max-width:768px){
+
+.terms-container{
+    width:95%;
+    padding:28px;
+    margin:35px auto;
+}
+
+h1{
+    font-size:30px;
+}
+
+.updated{
+    font-size:15px;
+}
+
+h2{
+    font-size:22px;
+}
+
+p,
+li{
+    font-size:15px;
+}
+
+}
+
+/* ==========================
+          Mobile
+========================== */
+
+@media (max-width:576px){
+
+.terms-container{
+    width:96%;
+    padding:22px 18px;
+    border-radius:10px;
+}
+
+h1{
+    font-size:26px;
+}
+
+.updated{
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+h2{
+    font-size:20px;
+    padding-left:10px;
+}
+
+p,
+li{
+    font-size:14px;
+    line-height:1.7;
+    text-align:left;
+}
+
+ul{
+    margin-left:20px;
+}
+
+}
+
+/* ==========================
+        Small Mobile
+========================== */
+
+@media (max-width:360px){
+
+.terms-container{
+    padding:16px;
+}
+
+h1{
+    font-size:22px;
+}
+
+h2{
+    font-size:18px;
+}
+
+.updated,
+p,
+li{
+    font-size:13px;
+}
+
+}

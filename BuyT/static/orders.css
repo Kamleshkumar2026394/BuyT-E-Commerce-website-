@@ -1,0 +1,212 @@
+/* ================================
+   MY ORDERS
+================================ */
+
+.orders-container {
+    width: 90%;
+    max-width: 1000px;
+
+    margin: 50px auto;
+}
+
+
+/* Heading */
+
+.orders-container > h1 {
+    text-align: center;
+
+    font-size: 32px;
+
+    margin-bottom: 40px;
+}
+
+
+/* Order Card */
+
+.order-card {
+    padding: 25px;
+
+    margin-bottom: 25px;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+}
+
+
+/* Order Header */
+
+.order-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding-bottom: 15px;
+
+    border-bottom: 1px solid #eee;
+}
+
+
+.order-header h2 {
+    margin: 0;
+
+    font-size: 22px;
+}
+
+
+.order-header span {
+    color: #777;
+
+    font-size: 14px;
+}
+
+
+/* Order Information */
+
+.order-card > p {
+    margin: 10px 0;
+
+    color: #555;
+}
+
+
+.order-card > p strong {
+    color: #111;
+
+    font-size: 18px;
+}
+
+
+/* Products heading */
+
+.order-card h3 {
+    margin-top: 25px;
+
+    margin-bottom: 15px;
+}
+
+
+/* Individual Order Item */
+
+.order-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 15px;
+
+    margin-top: 10px;
+
+    background: #f8fafc;
+
+    border-radius: 10px;
+}
+
+
+.order-item img {
+    width: 80px;
+    height: 80px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+}
+
+
+.order-item h4 {
+    margin: 0 0 8px;
+
+    font-size: 17px;
+}
+
+
+.order-item p {
+    margin: 5px 0;
+
+    color: #666;
+}
+
+
+/* Empty Orders */
+
+.orders-container > h2 {
+    text-align: center;
+
+    margin-top: 50px;
+
+    color: #666;
+}
+
+
+.orders-container > a {
+    display: block;
+
+    width: fit-content;
+
+    margin: 20px auto;
+
+    padding: 12px 25px;
+
+    background: #111827;
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    transition: 0.3s;
+}
+
+
+.orders-container > a:hover {
+    background: #2563eb;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 600px) {
+
+    .orders-container {
+        width: 95%;
+
+        margin: 30px auto;
+    }
+
+    .orders-container > h1 {
+        font-size: 27px;
+    }
+
+    .order-card {
+        padding: 18px;
+    }
+
+    .order-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 8px;
+    }
+
+    .order-item {
+        align-items: flex-start;
+    }
+
+    .order-item img {
+        width: 65px;
+        height: 65px;
+    }
+
+}

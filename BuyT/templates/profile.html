@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Products</title>
+    <link rel="stylesheet" href="{% static 'profile.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+{% include 'navbar.html' %}
+
+<div class="profile-container">
+
+    <div class="profile-card">
+
+        <div class="profile-image">
+            <i class="fa-solid fa-circle-user"></i>
+        </div>
+
+        <h2>{{ user.Full_Name }}</h2>
+        <p class="member">Member Since 2026</p>
+
+        <div class="profile-details">
+
+            <div class="detail-box">
+                <i class="fa-solid fa-envelope"></i>
+                <span>{{ user.Email }}</span>
+            </div>
+
+            <div class="detail-box">
+                <i class="fa-solid fa-phone"></i>
+                <span>{{ user.Phone }}</span>
+            </div>
+
+        </div>
+
+        <div class="profile-actions">
+
+            <a href="{% url 'edit_profile' %}" class="btn edit">
+                <i class="fa-solid fa-pen"></i>
+                Edit Profile
+            </a>
+
+            <a href="{% url 'cart' %}" class="btn cart">
+                <i class="fa-solid fa-cart-shopping"></i>
+                My Cart
+            </a>
+
+            <a href="" class="btn orders">
+                <i class="fa-solid fa-box"></i>
+                My Orders
+            </a>
+
+            <a href="{% url 'login' %}" class="btn logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

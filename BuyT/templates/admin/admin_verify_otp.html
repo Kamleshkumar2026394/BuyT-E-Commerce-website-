@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Verify Admin OTP - BuyT</title>
+
+    <link rel="stylesheet"
+          href="{% static 'admin-login.css' %}">
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="login-box">
+
+        <h1>BuyT</h1>
+
+        <p class="admin-title">
+            Admin Panel
+        </p>
+
+        <h2>Verify OTP</h2>
+
+        <p>
+            Enter the 6-digit OTP sent to your email.
+        </p>
+
+        {% if message %}
+
+            <div class="error-message">
+                {{ message }}
+            </div>
+
+        {% endif %}
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="input-group">
+
+                <label>OTP</label>
+
+                <input
+                    type="text"
+                    name="otp"
+                    placeholder="Enter 6-digit OTP"
+                    maxlength="6"
+                    required
+                >
+
+            </div>
+
+            <button type="submit">
+                Verify OTP
+            </button>
+
+        </form>
+
+        <div class="forgot-password">
+
+            <a href="{% url 'admin_forgot_password' %}">
+                Request New OTP
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

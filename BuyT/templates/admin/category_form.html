@@ -1,0 +1,152 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Category - BuyT Admin</title>
+
+    <link rel="stylesheet"
+          href="{% static 'admin.css' %}">
+
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            BuyT
+            <span>Admin</span>
+        </div>
+
+        <nav>
+
+            <a href="{% url 'admin_dashboard' %}">
+                📊 Dashboard
+            </a>
+
+            <a href="{% url 'admin_users' %}">
+                👤 Users
+            </a>
+
+            <a href="{% url 'admin_products' %}">
+                📦 Products
+            </a>
+
+            <a href="{% url 'admin_categories' %}" class="active">
+                🏷️ Categories
+            </a>
+
+            <a href="{% url 'admin_brands' %}">
+                🔖 Brands
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="{% url 'admin_logout' %}">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Add Category</h1>
+
+                <p>Create a new product category</p>
+
+            </div>
+
+        </header>
+
+
+        <section class="form-section">
+
+            <div class="form-card">
+
+                <form
+                    method="POST"
+                    enctype="multipart/form-data">
+
+                    {% csrf_token %}
+
+
+                    <div class="form-group">
+
+                        <label>Category Name</label>
+
+                        <input
+                            type="text"
+                            name="category_name"
+                            placeholder="Enter category name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Category Image</label>
+
+                        <input
+                            type="file"
+                            name="category_image"
+                            accept="image/*"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <a
+                            href="{% url 'admin_categories' %}"
+                            class="btn btn-secondary">
+
+                            Cancel
+
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary">
+
+                            ➕ Add Category
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

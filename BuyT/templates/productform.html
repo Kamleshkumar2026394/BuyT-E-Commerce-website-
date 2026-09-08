@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'productform.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="form-container">
+
+    <form action="" method="POST" enctype="multipart/form-data" class="product-form">
+        {% csrf_token %}
+
+        <h2>Add Product</h2>
+
+        <div class="form-group">
+            <label>Product Image</label>
+            <input type="text" name="image" required>
+        </div>
+
+        <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" name="name" placeholder="Enter Product Name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Price (₹)</label>
+            <input type="number" name="price" step="0.01" placeholder="Enter Price" required>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" rows="5" placeholder="Enter Product Description"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Brand</label>
+            <input type="number" name="brand_id"  placeholder="Enter brand id" required>
+        </div>
+
+        <div class="form-group">
+            <label>Category</label>
+            <input type="number" name="category_id"  placeholder="Enter category id" required>
+
+        </div>
+
+        <div class="form-group">
+            <label>Stock</label>
+            <input type="number" name="stock" placeholder="Available Stock">
+        </div>
+
+        <div class="form-group">
+            <label>Rating</label>
+            <input type="number" step="0.1" max="5" min="0" name="rating">
+        </div>
+
+        <div class="form-group">
+            <label>Reviews</label>
+            <input type="number" name="reviews">
+        </div>
+
+        <button type="submit">Add Product</button>
+
+        <div class="btn">
+        <button>
+            <a href="http://127.0.0.1:8000/addbrand/">Add New Brand</a>
+        </button>
+        <button>
+            <a href="">If new category add category</a>
+        </button>
+        <button>
+            <a href="">Check all Brand</a>
+        </button>
+        <button>
+            <a href="">Check all category</a>
+        </button>
+        <button>
+            <a href="">Check all product</a>
+        </button>
+        <button>
+            <a href="">Update</a>
+        </button>
+    </div>
+
+    </form>
+
+     
+</div>
+
+
+{% endblock %}
+
+{% include 'footer.html' %}

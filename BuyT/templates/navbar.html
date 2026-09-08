@@ -1,0 +1,108 @@
+{% load static %}
+
+    <link rel="stylesheet" href="{% static 'style.css'%}">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="{% url 'home' %}">BuyT</a>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}"  class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
+            <li><a href="{% url 'products' %}"  class="{% if request.resolver_match.url_name == 'products' %}active{% endif %}">Products</a></li>
+            <li><a href="{% url 'categories' %}"  class="{% if request.resolver_match.url_name == 'categories' %}active{% endif %}">Categories</a></li>
+            <li><a href="{% url 'about' %}"  class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a></li>
+            <li><a href="{% url 'contact' %}"  class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a></li>
+        </ul>
+
+         <div class="search-box">
+        <form action="{% url 'search' %}" method="GET" class="search-form">
+            <input
+                type="text"
+                name="q"
+                placeholder="Search products..."
+                value="{{ request.GET.q }}"
+            >
+    <button type="submit">
+        <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+</form>
+    </div>
+
+        {% if not is_login_page %}
+
+<div class="nav-buttons">
+
+    {% if request.session.user_id %}
+
+        <a href="{% url 'orders' %}" class="{% if request.resolver_match.url_name == 'orders' %}active{% endif %}">Orders</a>
+        <a href="{% url 'cart' %}" class="{% if request.resolver_match.url_name == 'cart' %}active{% endif %}">🛒</a>
+        <a href="{% url 'wishlist' %}" class="nav-link wishlist-link {% if request.resolver_match.url_name == 'wishlist' %}active{% endif %}"> 
+            <i class="fa-regular fa-heart"></i>
+             Wishlist {% if wishlist_count > 0 %} 
+            <span class="wishlist-count">{{ wishlist_count }}</span>
+             {% endif %}</a>
+        <a href="{% url 'profile' %}" class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}">👤</a>
+
+    {% else %}
+
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'sign' %}">Sign Up</a>
+
+    {% endif %}
+
+</div>
+
+{% endif %}
+
+<button class="menu-btn" id="menuBtn">☰</button>
+    </nav>
+
+
+<div class="mobile-menu" id="mobileMenu">
+    <button class="close-btn" id="closeBtn">×</button>
+    <ul class="mobile-nav-links">
+        <li><a href="{% url 'home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a></li>
+        <li><a href="{% url 'products' %}" class="{% if request.resolver_match.url_name == 'products' %}active{% endif %}">Product</a></li>
+        <li><a href="{% url 'categories' %}" class="{% if request.resolver_match.url_name == 'categories' %}active{% endif %}">Categories</a></li>
+        <li><a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">About</a></li>
+        <li><a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a></li>
+        <li><a href="{% url 'orders' %}" class="{% if request.resolver_match.url_name == 'orders' %}active{% endif %}">Orders</a></li>
+        <li><a href="{% url 'cart' %}" class="{% if request.resolver_match.url_name == 'cart' %}active{% endif %}">🛒</a></li>
+        <li><a href="{% url 'wishlist' %}" class="{% if request.resolver_match.url_name == 'wishlist' %}active{% endif %}" class="nav-link wishlist-link"> 
+            <i class="fa-regular fa-heart"></i>
+             Wishlist {% if wishlist_count > 0 %} 
+            <span class="wishlist-count">{{ wishlist_count }}</span>
+             {% endif %}</a></li>
+        <li><a href="{% url 'profile' %}" class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}">👤</a></li>
+    </ul>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<script>
+const menuBtn = document.getElementById('menuBtn');
+const closeBtn = document.getElementById('closeBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const overlay = document.getElementById('overlay');
+
+menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('active');
+    overlay.classList.toggle('active');
+     if (mobileMenu.classList.contains('active')) {
+        menuBtn.textContent = '✕';
+    } else {
+        menuBtn.textContent = '☰';
+    }
+});
+
+function closeMenu() {
+    mobileMenu.classList.remove('active');
+    overlay.classList.remove('active');
+}
+
+closeBtn.addEventListener('click', closeMenu);
+overlay.addEventListener('click', closeMenu);
+</script>

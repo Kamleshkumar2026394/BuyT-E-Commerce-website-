@@ -1,0 +1,193 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>User - BuyT Admin</title>
+
+    <link rel="stylesheet"
+          href="{% static 'admin.css' %}">
+
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            BuyT
+            <span>Admin</span>
+        </div>
+
+        <nav>
+
+            <a href="{% url 'admin_dashboard' %}">
+                📊 Dashboard
+            </a>
+
+            <a href="{% url 'admin_users' %}" class="active">
+                👤 Users
+            </a>
+
+            <a href="{% url 'admin_products' %}">
+                📦 Products
+            </a>
+
+            <a href="{% url 'admin_categories' %}">
+                🏷️ Categories
+            </a>
+
+            <a href="{% url 'admin_brands' %}">
+                🔖 Brands
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="{% url 'admin_logout' %}">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    {% if user %}
+                        Edit User
+                    {% else %}
+                        Add User
+                    {% endif %}
+                </h1>
+
+                <p>
+                    Manage customer account information
+                </p>
+
+            </div>
+
+        </header>
+
+
+        <section class="form-section">
+
+            <div class="form-card">
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+
+                    <div class="form-group">
+
+                        <label>Full Name</label>
+
+                        <input
+                            type="text"
+                            name="Full_Name"
+                            value="{{ user.Full_Name|default:'' }}"
+                            placeholder="Enter full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Email</label>
+
+                        <input
+                            type="email"
+                            name="Email"
+                            value="{{ user.Email|default:'' }}"
+                            placeholder="Enter email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Phone</label>
+
+                        <input
+                            type="text"
+                            name="Phone"
+                            value="{{ user.Phone|default:'' }}"
+                            placeholder="Enter phone number"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Password</label>
+
+                        <input
+                            type="password"
+                            name="Password"
+                            placeholder="{% if user %}Leave blank to keep current password{% else %}Enter password{% endif %}"
+                            {% if not user %}required{% endif %}
+                        >
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <a
+                            href="{% url 'admin_users' %}"
+                            class="btn btn-secondary">
+
+                            Cancel
+
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary">
+
+                            {% if user %}
+                                💾 Update User
+                            {% else %}
+                                ➕ Add User
+                            {% endif %}
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

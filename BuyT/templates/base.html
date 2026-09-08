@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuyT</title>
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'theme.css' %}">
+    <link rel="stylesheet" href="{% static 'chatbot.css' %}">
+
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'search.css' %}">
+    {% endblock %}
+</head>
+
+<body>
+
+    {% include 'navbar.html' %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% include 'footer.html' %}
+
+
+    <!-- =========================
+         FLOATING TOOLS
+    ========================== -->
+
+    <div class="floating-tools">
+
+        <!-- Main Button -->
+        <button class="tools-main">
+            ⚙️
+        </button>
+
+        <!-- Theme Button -->
+        <button id="themeToggle" class="theme-btn">
+            🌙
+        </button>
+
+        <!-- Chatbot Button -->
+        <button id="chatbot-toggle" class="chatbot-toggle">
+            🤖
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         CHATBOT WINDOW
+    ========================== -->
+
+    {% include "chatbot.html" %}
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="{% static 'script.js' %}"></script>
+
+    <script>
+
+        const btn = document.getElementById("themeToggle");
+
+        // Load saved theme
+        if (localStorage.getItem("theme") === "dark") {
+
+            document.body.classList.add("dark");
+
+            btn.innerHTML = "☀️";
+
+        }
+
+
+        // Theme toggle
+        btn.onclick = function () {
+
+            document.body.classList.toggle("dark");
+
+            if (document.body.classList.contains("dark")) {
+
+                btn.innerHTML = "☀️";
+
+                localStorage.setItem("theme", "dark");
+
+            } else {
+
+                btn.innerHTML = "🌙";
+
+                localStorage.setItem("theme", "light");
+
+            }
+
+        };
+
+    </script>
+
+    <script src="{% static 'chatbot.js' %}"></script>
+
+</body>
+</html>

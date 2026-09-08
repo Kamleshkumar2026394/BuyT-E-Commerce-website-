@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+</head>
+<body>
+
+    <!-- {% include 'navbar.html'%} -->
+
+<div class="container">
+
+    <div class="login-box">
+
+        <h1>Welcome Back</h1>
+        <p>Login to your BuyT account</p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="input-box">
+                <label>Username</label>
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your Username"
+                    required
+                >
+            </div>
+
+            <div class="input-box">
+                <label>Password</label>
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                >
+            </div>
+
+            <div class="options">
+                <label>
+                    <input type="checkbox">
+                    Remember Me
+                </label>
+
+                <a href="{% url 'forgot_password' %}">Forgot Password?</a>
+            </div>
+
+            <button type="submit">Login</button>
+            <div class="signup-link">
+                {% if message %}
+                <h5>{{ message }}</h5>
+                {% endif %}
+            </div>
+            <div class="signup-link">
+                Don't have an account?
+                <a href="{% url 'sign' %}">Sign Up</a>
+                
+            </div>
+             
+        </form>
+       
+
+    </div>
+
+</div>
+
+</body>
+</html>

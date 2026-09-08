@@ -1,0 +1,221 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#f5f7fb;
+    color:#333;
+    line-height:1.7;
+    overflow-x:hidden;
+}
+
+/* ==========================
+   Privacy Container
+========================== */
+
+.privacy-container{
+    width:min(85%,1000px);
+    margin:60px auto;
+    background:#fff;
+    padding:45px;
+    border-radius:15px;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+}
+
+/* ==========================
+   Heading
+========================== */
+
+h1{
+    text-align:center;
+    color:#0d6efd;
+    margin-bottom:12px;
+    font-size:40px;
+}
+
+.updated{
+    text-align:center;
+    color:#777;
+    margin-bottom:40px;
+    font-style:italic;
+    font-size:16px;
+}
+
+/* ==========================
+   Sections
+========================== */
+
+section{
+    margin-bottom:35px;
+}
+
+h2{
+    color:#222;
+    margin-bottom:18px;
+    padding-left:12px;
+    border-left:5px solid #0d6efd;
+    font-size:28px;
+}
+
+p{
+    margin-bottom:15px;
+    text-align:justify;
+    font-size:17px;
+    color:#555;
+}
+
+ul{
+    margin-left:25px;
+    margin-top:10px;
+}
+
+li{
+    margin-bottom:12px;
+    color:#555;
+}
+
+/* ==========================
+   Large Laptop
+========================== */
+
+@media(max-width:1200px){
+
+.privacy-container{
+    width:90%;
+}
+
+h1{
+    font-size:36px;
+}
+
+h2{
+    font-size:26px;
+}
+
+}
+
+/* ==========================
+   Laptop
+========================== */
+
+@media(max-width:992px){
+
+.privacy-container{
+    padding:35px;
+}
+
+h1{
+    font-size:34px;
+}
+
+p,
+li{
+    font-size:16px;
+}
+
+}
+
+/* ==========================
+   Tablet
+========================== */
+
+@media(max-width:768px){
+
+.privacy-container{
+    width:95%;
+    padding:28px;
+    margin:40px auto;
+}
+
+h1{
+    font-size:30px;
+}
+
+.updated{
+    font-size:15px;
+    margin-bottom:30px;
+}
+
+h2{
+    font-size:24px;
+}
+
+p,
+li{
+    font-size:15px;
+}
+
+}
+
+/* ==========================
+   Mobile
+========================== */
+
+@media(max-width:576px){
+
+.privacy-container{
+    width:95%;
+    padding:20px;
+    border-radius:10px;
+}
+
+h1{
+    font-size:26px;
+}
+
+.updated{
+    font-size:14px;
+}
+
+h2{
+    font-size:20px;
+    padding-left:10px;
+}
+
+p,
+li{
+    font-size:14px;
+    text-align:left;
+}
+
+ul{
+    margin-left:20px;
+}
+
+}
+
+/* ==========================
+   Small Mobile
+========================== */
+
+@media(max-width:360px){
+
+.privacy-container{
+    padding:18px 15px;
+}
+
+h1{
+    font-size:22px;
+}
+
+.updated{
+    font-size:13px;
+}
+
+h2{
+    font-size:18px;
+}
+
+p,
+li{
+    font-size:13px;
+}
+
+}

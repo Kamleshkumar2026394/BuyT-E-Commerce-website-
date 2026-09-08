@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+{{ product.product_name }} - BuyT
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'product_detail.css' %}">
+
+<div class="product-detail-container">
+
+    <!-- Back Button -->
+
+    <a href="{% url 'products' %}" class="back-btn">
+        ← Back to Products
+    </a>
+
+
+    <div class="product-detail">
+
+        <!-- Product Image -->
+
+        <div class="product-image-section">
+
+            {% if product.image %}
+
+                <img
+                    src="{{ product.image }}"
+                    alt="{{ product.product_name }}"
+                    class="product-detail-image"
+                >
+
+            {% else %}
+
+                <div class="no-product-image">
+                    No Image Available
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- Product Information -->
+
+        <div class="product-info">
+
+            {% if product.brand %}
+
+                <p class="product-brand">
+                    {{ product.brand.brand_name }}
+                </p>
+
+            {% endif %}
+
+
+            <h1 class="product-title">
+                {{ product.product_name }}
+            </h1>
+
+
+            <!-- Rating -->
+
+            {% if product.rating %}
+
+                <div class="product-rating">
+
+                    <span class="stars">
+                        ⭐ {{ product.rating }}
+                    </span>
+
+                    {% if product.reviews %}
+                        <span class="reviews">
+                            ({{ product.reviews }} reviews)
+                        </span>
+                    {% endif %}
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- Price -->
+
+            <div class="product-price">
+
+                ₹{{ product.price }}
+
+            </div>
+
+
+            <!-- Stock -->
+
+            {% if product.stock > 0 %}
+
+                <p class="stock available">
+                    ✓ In Stock
+                </p>
+
+                <p class="stock-quantity">
+                    {{ product.stock }} items available
+                </p>
+
+            {% else %}
+
+                <p class="stock unavailable">
+                    ✕ Out of Stock
+                </p>
+
+            {% endif %}
+
+
+            <!-- Description -->
+
+            <div class="product-description">
+
+                <h3>Description</h3>
+
+                <p>
+                    {{ product.description }}
+                </p>
+
+            </div>
+
+
+            <!-- Actions -->
+
+            <div class="product-actions">
+
+                {% if request.session.user_id %}
+
+                    {% if is_wishlisted %}
+
+                        <a
+                            href="{% url 'remove_from_wishlist' product.id %}"
+                            class="wishlist-detail-btn active"
+                        >
+                            ❤️ Remove from Wishlist
+                        </a>
+
+                    {% else %}
+
+                        <a
+                            href="{% url 'add_to_wishlist' product.id %}"
+                            class="wishlist-detail-btn"
+                        >
+                            🤍 Add to Wishlist
+                        </a>
+
+                    {% endif %}
+
+                {% else %}
+
+                    <a
+                        href="{% url 'login' %}"
+                        class="wishlist-detail-btn"
+                    >
+                        🤍 Login to Add Wishlist
+                    </a>
+
+                {% endif %}
+
+
+                {% if product.stock > 0 %}
+
+                    <a
+                        href="{% url 'add_to_cart' product.id %}"
+                        class="add-cart-btn"
+                    >
+                        🛒 Add to Cart
+                    </a>
+
+                {% else %}
+
+                    <button
+                        class="add-cart-btn disabled"
+                        disabled
+                    >
+                        Out of Stock
+                    </button>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

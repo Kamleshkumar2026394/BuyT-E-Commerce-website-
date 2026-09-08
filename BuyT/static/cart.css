@@ -1,0 +1,336 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#f4f6f9;
+    overflow-x:hidden;
+    padding:40px 20px;
+}
+
+/* Container */
+
+.container{
+    width:min(95%,1200px);
+    margin:auto;
+}
+
+.container h1{
+    text-align:center;
+    color:#222;
+    font-size:42px;
+    margin-bottom:40px;
+}
+
+/* Cart Item */
+
+.cart-item{
+    background:#fff;
+    display:grid;
+    grid-template-columns:140px 1fr auto;
+    gap:25px;
+    align-items:center;
+    padding:25px;
+    margin-bottom:25px;
+    border-radius:15px;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+    transition:.3s;
+}
+
+.cart-item:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 30px rgba(0,0,0,.15);
+}
+
+/* Product Image */
+
+.cart-item img{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:12px;
+}
+
+/* Product Details */
+
+.details h2{
+    color:#222;
+    margin-bottom:12px;
+    font-size:24px;
+}
+
+.details p{
+    color:#555;
+    margin-bottom:10px;
+    font-size:17px;
+}
+
+.details strong{
+    color:#111;
+}
+
+/* Buttons */
+
+.buttons{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.buttons a{
+    text-decoration:none;
+}
+
+.buttons button{
+    width:120px;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.buttons button:hover{
+    transform:scale(1.05);
+}
+
+.buttons a:nth-child(1) button{
+    background:#ffc107;
+    color:#222;
+}
+
+.buttons a:nth-child(2) button{
+    background:#198754;
+    color:white;
+}
+
+.remove{
+    background:#dc3545 !important;
+    color:white;
+}
+
+/* Summary */
+
+.summary{
+    background:#fff;
+    padding:30px;
+    margin-top:35px;
+    border-radius:15px;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+}
+
+.summary h2{
+    margin-bottom:20px;
+    color:#222;
+}
+
+.summary p,
+.summary h3{
+    margin-bottom:15px;
+    font-size:20px;
+    color:#333;
+}
+
+.checkout{
+    width:100%;
+    padding:16px;
+    background:#0d6efd;
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:18px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.checkout:hover{
+    background:#0b5ed7;
+}
+
+/* Empty Cart */
+
+.container h2{
+    text-align:center;
+    margin-top:100px;
+    color:#777;
+}
+
+/* ------------------- */
+/* Large Laptop */
+/* ------------------- */
+
+@media(max-width:1200px){
+
+.container h1{
+    font-size:38px;
+}
+
+}
+
+/* ------------------- */
+/* Laptop */
+/* ------------------- */
+
+@media(max-width:992px){
+
+.cart-item{
+    grid-template-columns:120px 1fr;
+}
+
+.buttons{
+    grid-column:1/3;
+    flex-direction:row;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+.buttons button{
+    width:110px;
+}
+
+}
+
+/* ------------------- */
+/* Tablet */
+/* ------------------- */
+
+@media(max-width:768px){
+
+body{
+    padding:20px 15px;
+}
+
+.container h1{
+    font-size:32px;
+}
+
+.cart-item{
+    grid-template-columns:1fr;
+    text-align:center;
+}
+
+.cart-item img{
+    margin:auto;
+    width:140px;
+    height:140px;
+}
+
+.details h2{
+    font-size:22px;
+}
+
+.details p{
+    font-size:16px;
+}
+
+.buttons{
+    flex-direction:row;
+    justify-content:center;
+    gap:10px;
+}
+
+.summary{
+    padding:25px;
+}
+
+.summary h2{
+    font-size:24px;
+}
+
+.summary p,
+.summary h3{
+    font-size:18px;
+}
+
+}
+
+/* ------------------- */
+/* Mobile */
+/* ------------------- */
+
+@media(max-width:576px){
+
+.container h1{
+    font-size:28px;
+}
+
+.cart-item{
+    padding:18px;
+}
+
+.cart-item img{
+    width:120px;
+    height:120px;
+}
+
+.details h2{
+    font-size:20px;
+}
+
+.details p{
+    font-size:15px;
+}
+
+.buttons{
+    flex-direction:column;
+    align-items:center;
+}
+
+.buttons button{
+    width:100%;
+    max-width:220px;
+}
+
+.summary{
+    padding:20px;
+}
+
+.summary h2{
+    font-size:22px;
+}
+
+.summary p,
+.summary h3{
+    font-size:17px;
+}
+
+.checkout{
+    font-size:16px;
+}
+
+}
+
+/* ------------------- */
+/* Very Small Devices */
+/* ------------------- */
+
+@media(max-width:360px){
+
+.container h1{
+    font-size:24px;
+}
+
+.details h2{
+    font-size:18px;
+}
+
+.details p{
+    font-size:14px;
+}
+
+.cart-item img{
+    width:100px;
+    height:100px;
+}
+
+}

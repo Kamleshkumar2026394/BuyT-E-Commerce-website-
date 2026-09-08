@@ -1,0 +1,285 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Product - BuyT Admin</title>
+
+    <link rel="stylesheet"
+          href="{% static 'admin.css' %}">
+
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            BuyT
+            <span>Admin</span>
+        </div>
+
+        <nav>
+
+            <a href="{% url 'admin_dashboard' %}">
+                📊 Dashboard
+            </a>
+
+            <a href="{% url 'admin_users' %}">
+                👤 Users
+            </a>
+
+            <a href="{% url 'admin_products' %}" class="active">
+                📦 Products
+            </a>
+
+            <a href="{% url 'admin_categories' %}">
+                🏷️ Categories
+            </a>
+
+            <a href="{% url 'admin_brands' %}">
+                🔖 Brands
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="{% url 'admin_logout' %}">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Add Product</h1>
+
+                <p>Add a new product to BuyT</p>
+
+            </div>
+
+        </header>
+
+
+        <section class="form-section">
+
+            <div class="form-card">
+
+                <form
+                    method="POST"
+                    enctype="multipart/form-data">
+
+                    {% csrf_token %}
+
+
+                    <div class="form-group">
+
+                        <label>Product Name</label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Enter product name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Price</label>
+
+                            <input
+                                type="number"
+                                name="price"
+                                step="0.01"
+                                min="0"
+                                placeholder="Enter price"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Stock</label>
+
+                            <input
+                                type="number"
+                                name="stock"
+                                min="0"
+                                value="0"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>Rating</label>
+
+                            <input
+                                type="number"
+                                name="rating"
+                                step="0.1"
+                                min="0"
+                                max="9.9"
+                                value="0"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>Reviews</label>
+
+                            <input
+                                type="number"
+                                name="reviews"
+                                min="0"
+                                value="0"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Brand</label>
+
+                        <select name="brand_id" required>
+
+                            <option value="">
+                                Select Brand
+                            </option>
+
+                            {% for item in brands %}
+
+                                <option value="{{ item.id }}">
+
+                                    {{ item.brand_name }}
+
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Category</label>
+
+                        <select name="category_id" required>
+
+                            <option value="">
+                                Select Category
+                            </option>
+
+                            {% for item in categories %}
+
+                                <option value="{{ item.id }}">
+
+                                    {{ item.category_name }}
+
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Description</label>
+
+                        <textarea
+                            name="description"
+                            rows="6"
+                            placeholder="Enter product description"
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Product Image</label>
+
+                        <input
+                            type="file"
+                            name="image"
+                            accept="image/*"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <a
+                            href="{% url 'admin_products' %}"
+                            class="btn btn-secondary">
+
+                            Cancel
+
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary">
+
+                            ➕ Add Product
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

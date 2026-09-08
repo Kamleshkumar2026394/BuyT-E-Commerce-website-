@@ -1,0 +1,109 @@
+/* ================================
+   ORDER SUCCESS
+================================ */
+
+.success-container {
+    width: 90%;
+    max-width: 700px;
+
+    margin: 70px auto;
+    padding: 45px;
+
+    text-align: center;
+
+    background: white;
+
+    border-radius: 16px;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+
+/* Success Heading */
+
+.success-container h1 {
+    font-size: 32px;
+
+    margin-bottom: 30px;
+
+    color: #16a34a;
+}
+
+
+.success-container h2 {
+    font-size: 24px;
+
+    margin-bottom: 20px;
+}
+
+
+.success-container p {
+    font-size: 17px;
+
+    margin: 12px 0;
+
+    color: #555;
+}
+
+
+/* Buttons */
+
+.success-container a {
+    display: inline-block;
+
+    margin-top: 20px;
+
+    padding: 12px 25px;
+
+    text-decoration: none;
+
+    background: #111827;
+
+    color: white;
+
+    border-radius: 8px;
+
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+
+.success-container a:hover {
+    background: #2563eb;
+}
+
+
+/* Second link */
+
+.success-container a + br + br + a {
+    background: #16a34a;
+}
+
+
+.success-container a + br + br + a:hover {
+    background: #15803d;
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .success-container {
+        width: 90%;
+
+        padding: 30px 20px;
+
+        margin: 40px auto;
+    }
+
+    .success-container h1 {
+        font-size: 26px;
+    }
+
+    .success-container h2 {
+        font-size: 21px;
+    }
+
+}

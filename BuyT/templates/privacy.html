@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | BuyT</title>
+
+    <link rel="stylesheet" href="{% static 'privacy.css' %}">
+</head>
+<body>
+
+{% include 'navbar.html' %}
+{% block contact %}
+
+<div class="privacy-container">
+
+    <h1>Privacy Policy</h1>
+
+    <p class="updated">
+        Last Updated: July 2026
+    </p>
+
+    <section>
+
+        <h2>1. Introduction</h2>
+
+        <p>
+            Welcome to <strong>BuyT</strong>. We respect your privacy and are
+            committed to protecting your personal information. This Privacy
+            Policy explains how we collect, use, and safeguard your data when
+            you use our website.
+        </p>
+
+    </section>
+
+    <section>
+
+        <h2>2. Information We Collect</h2>
+
+        <ul>
+            <li>Full Name</li>
+            <li>Email Address</li>
+            <li>Phone Number</li>
+            <li>Shipping Address</li>
+            <li>Payment Information (Processed Securely)</li>
+            <li>Order History</li>
+        </ul>
+
+    </section>
+
+    <section>
+
+        <h2>3. How We Use Your Information</h2>
+
+        <ul>
+            <li>To process your orders.</li>
+            <li>To improve our services.</li>
+            <li>To provide customer support.</li>
+            <li>To send order confirmations.</li>
+            <li>To notify you about offers and discounts.</li>
+        </ul>
+
+    </section>
+
+    <section>
+
+        <h2>4. Data Security</h2>
+
+        <p>
+            We use industry-standard security practices to protect your
+            information from unauthorized access, alteration, or disclosure.
+        </p>
+
+    </section>
+
+    <section>
+
+        <h2>5. Cookies</h2>
+
+        <p>
+            Our website uses cookies to improve your browsing experience,
+            remember your preferences, and analyze website traffic.
+        </p>
+
+    </section>
+
+    <section>
+
+        <h2>6. Third-Party Services</h2>
+
+        <p>
+            We may use trusted third-party services for payment processing,
+            shipping, analytics, and email notifications.
+        </p>
+
+    </section>
+
+    <section>
+
+        <h2>7. Your Rights</h2>
+
+        <ul>
+            <li>Access your personal information.</li>
+            <li>Update your profile.</li>
+            <li>Request deletion of your account.</li>
+            <li>Opt out of promotional emails.</li>
+        </ul>
+
+    </section>
+
+    <section>
+
+        <h2>8. Contact Us</h2>
+
+        <p>
+            If you have any questions regarding this Privacy Policy, please
+            contact us at:
+        </p>
+
+        <p>
+            📧 support@buyt.com
+        </p>
+
+    </section>
+
+</div>
+{% endblock %}
+{% include 'footer.html' %}
+</body>
+</html>

@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop By Category</title>
+
+    <link rel="stylesheet" href="{% static 'categories.css' %}">
+</head>
+<body>
+
+{% include 'navbar.html' %}
+
+<h2>Shop By Category</h2>
+
+<div class="category-container">
+
+    {% for category in categories %}
+
+    <div class="category-card">
+
+    {% if category.category_image %}
+        <img
+            src="{{ category.category_image }}"
+            alt="{{ category.category_name }}"
+            loading="lazy"
+        >
+    {% endif %}
+
+    <a href="{% url 'category_products' category.id %}">
+        {{ category.category_name }}
+    </a>
+
+</div>
+
+    {% endfor %}
+
+</div>
+
+{% include 'footer.html' %}
+
+</body>
+</html>

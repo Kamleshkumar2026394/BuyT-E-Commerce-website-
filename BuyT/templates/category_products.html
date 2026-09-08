@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ category.category_name }}</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'categories2.css' %}">
+</head>
+<body>
+{% include 'navbar.html' %}
+<h1>{{ category.category_name }}</h1>
+
+<div class="products">
+
+{% for product in products %}
+
+<div class="card">
+
+    {% if product.image %}
+
+    <img
+        src="{{ product.image }}"
+        alt="{{ product.name }}"
+        loading="lazy"
+    >
+
+{% endif %}
+
+    <h3>{{ product.name }}</h3>
+
+    <p class="price">₹{{ product.price }}</p>
+
+    <p class="description">{{ product.description }}</p>
+
+    <p class="brand">Brand : {{ product.brand.brand_name }}</p>
+
+    <p class="stock">Stock : {{ product.stock }}</p>
+
+    <p class="rating">⭐ {{ product.rating }} ({{ product.reviews }} Reviews)</p>
+
+    <button class="btn">Add to Cart</button>
+
+</div>
+
+{% empty %}
+
+<h2>No Products Available</h2>
+
+{% endfor %}
+
+</div>
+
+{% include 'footer.html'%}
+
+</body>
+</html>

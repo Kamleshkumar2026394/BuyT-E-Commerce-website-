@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Page Not Found | BuyT</title>
+
+    <link rel="stylesheet"
+          href="{% static '404.css' %}">
+</head>
+
+<body>
+
+    <div class="error-container">
+
+        <div class="error-content">
+
+            <div class="logo">
+                BuyT
+            </div>
+
+            <div class="error-number">
+                404
+            </div>
+
+            <h1>Oops! Page Not Found</h1>
+
+            <p>
+                The page you're looking for doesn't exist,
+                may have been moved, or is temporarily unavailable.
+            </p>
+
+            <div class="buttons">
+
+                <a href="{% url 'home' %}" class="home-btn">
+                    🏠 Go to Home
+                </a>
+
+                <a href="{% url 'products' %}" class="shop-btn">
+                    🛍 Continue Shopping
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="shopping-icon">
+            🛒
+        </div>
+
+    </div>
+
+</body>
+
+</html>

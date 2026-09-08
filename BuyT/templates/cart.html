@@ -1,0 +1,95 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+
+    <link rel="stylesheet" href="{% static 'cart.css' %}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    
+
+    
+
+<div class="container">
+
+    
+
+    {% if items %}
+
+        {% for item in items %}
+
+        <div class="cart-item">
+
+            <img src="{{ item.product.image }}" alt="{{ item.product.name }}">
+
+            <div class="details">
+
+                <h2>{{ item.product.name }}</h2>
+
+                <p>₹{{ item.product.price }}</p>
+
+                <p>Quantity : {{ item.quantity }}</p>
+
+                <p>
+                    <strong>Subtotal :</strong>
+                    ₹{{ item.subtotal }}
+                </p>
+
+            </div>
+
+            <div class="buttons">
+                <a href="{% url 'decrease_quantity' item.id %}">
+                    <button>-</button>
+                </a>
+
+                <a href="{% url 'increase_quantity' item.id %}">
+                    <button>+</button>
+                </a>
+
+                <a href="{% url 'remove_item' item.id %}">
+                    <button class="remove">Remove</button>
+                </a>
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+        <div class="summary">
+
+            <h2>Order Summary</h2>
+
+            <p>
+                Total Items :
+                {{ items|length }}
+            </p>
+
+            <h3>
+                Total Price : ₹{{ total }}
+            </h3>
+
+            
+
+            <button class="checkout">
+                <a href="{% url 'checkout' %}" class="checkout-btn">
+                Proceed to Checkout
+            </a>
+            </button>
+
+        </div>
+
+    {% else %}
+
+        <h2>Your cart is empty.</h2>
+
+    {% endif %}
+
+</div>
+{% include 'footer.html' %}
+</body>
+</html>

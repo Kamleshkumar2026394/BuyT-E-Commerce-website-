@@ -1,0 +1,129 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions | BuyT</title>
+
+    <link rel="stylesheet" href="{% static 'terms.css' %}">
+</head>
+<body>
+{% include 'navbar.html' %}
+{% block contact %}
+<div class="terms-container">
+
+    <h1>Terms & Conditions</h1>
+
+    <p class="updated">
+        Last Updated: July 2026
+    </p>
+
+    <section>
+        <h2>1. Acceptance of Terms</h2>
+
+        <p>
+            By accessing or using BuyT, you agree to comply with these Terms &
+            Conditions. If you do not agree, please do not use our website.
+        </p>
+    </section>
+
+    <section>
+        <h2>2. User Account</h2>
+
+        <ul>
+            <li>You must provide accurate information while creating an account.</li>
+            <li>You are responsible for keeping your login credentials secure.</li>
+            <li>You are responsible for all activities under your account.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>3. Orders & Payments</h2>
+
+        <ul>
+            <li>All orders are subject to availability.</li>
+            <li>Prices are listed in Indian Rupees (₹).</li>
+            <li>Payments must be completed before order processing.</li>
+            <li>We reserve the right to cancel fraudulent orders.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>4. Shipping & Delivery</h2>
+
+        <p>
+            Delivery times are estimates and may vary depending on your
+            location and courier availability.
+        </p>
+    </section>
+
+    <section>
+        <h2>5. Returns & Refunds</h2>
+
+        <ul>
+            <li>Products may be returned within the eligible return period.</li>
+            <li>Refunds will be processed after product inspection.</li>
+            <li>Certain products may not be eligible for return.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>6. Prohibited Activities</h2>
+
+        <ul>
+            <li>Providing false information.</li>
+            <li>Attempting unauthorized access to the website.</li>
+            <li>Uploading harmful or malicious content.</li>
+            <li>Violating applicable laws while using the website.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>7. Intellectual Property</h2>
+
+        <p>
+            All website content, including logos, text, images, graphics,
+            and trademarks, belongs to BuyT and may not be copied or reused
+            without permission.
+        </p>
+    </section>
+
+    <section>
+        <h2>8. Limitation of Liability</h2>
+
+        <p>
+            BuyT is not responsible for indirect, incidental, or consequential
+            damages resulting from the use of our website.
+        </p>
+    </section>
+
+    <section>
+        <h2>9. Changes to Terms</h2>
+
+        <p>
+            We may update these Terms & Conditions at any time. Continued use
+            of the website after changes indicates acceptance of the updated terms.
+        </p>
+    </section>
+
+    <section>
+        <h2>10. Contact Us</h2>
+
+        <p>
+            If you have any questions regarding these Terms & Conditions,
+            please contact us:
+        </p>
+
+        <p>
+            📧 support@buyt.com <br>
+            📞 +91 98765 43210
+        </p>
+    </section>
+
+</div>
+{% endblock %}
+{% include 'footer.html' %}
+</body>
+</html>

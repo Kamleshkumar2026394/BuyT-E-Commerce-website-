@@ -1,0 +1,228 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Products</title>
+
+    <link rel="stylesheet" href="{% static 'product.css' %}">
+</head>
+
+<body>
+
+{% include 'navbar.html' %}
+
+
+<div class="products-container">
+
+    {% for product in products %}
+
+    <div class="product-card">
+
+        <!-- Product Image -->
+        <div class="product-image">
+
+            <a href="{% url 'product_detail' product.id %}">
+
+                {% if product.image %}
+                    <img
+                        src="{{ product.image }}"
+                        alt="{{ product.name }}"
+                        loading="lazy"
+                    >
+                {% endif %}
+
+            </a>
+
+        </div>
+
+
+        <div class="product-info">
+
+            <!-- Brand -->
+            <p class="brand">
+                {{ product.brand.brand_name }}
+            </p>
+
+
+            <!-- Product Name -->
+            <h3>
+                <a
+                    href="{% url 'product_detail' product.id %}"
+                    class="product-name-link"
+                >
+                    {{ product.name }}
+                </a>
+            </h3>
+
+
+            <!-- Description -->
+            <p class="description">
+                {{ product.description|truncatechars:80 }}
+            </p>
+
+
+            <!-- Rating -->
+            <div class="rating">
+                ⭐ {{ product.rating }}
+                ({{ product.reviews }} Reviews)
+            </div>
+
+
+            <!-- Price + Stock -->
+            <div class="price-stock">
+
+                <span class="price">
+                    ₹{{ product.price }}
+                </span>
+
+                {% if product.stock > 0 %}
+
+                    <span class="stock in-stock">
+                        In Stock
+                    </span>
+
+                {% else %}
+
+                    <span class="stock out-stock">
+                        Out of Stock
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="buttons">
+
+                {% if product.stock > 0 %}
+
+                    <!-- Add to Cart -->
+                    <a href="{% url 'add_to_cart' product.id %}">
+                        <button class="cart-btn">
+                            Add to Cart
+                        </button>
+                    </a>
+
+
+                    <!-- Wishlist -->
+                    {% if request.session.user_id %}
+
+                        {% if product.id in wishlist_ids %}
+
+                            <a
+                                href="{% url 'remove_from_wishlist' product.id %}"
+                                
+                                title="Remove from Wishlist"
+                            >
+                                <button class="wishlist-btn active">
+                                ❤️
+                                </button>
+                            </a>
+
+                        {% else %}
+
+                            <a
+                                href="{% url 'add_to_wishlist' product.id %}"
+                                
+                                title="Add to Wishlist"
+                            >
+                            <button class="wishlist-btn">
+                                🤍
+                                </button>
+                            </a>
+
+                        {% endif %}
+
+                    {% else %}
+
+                        <a
+                            href="{% url 'login' %}"
+                            
+                            title="Login to add to Wishlist"
+                        >
+                         <button class="wishlist-btn">
+                            🤍
+                        </button>
+                        
+                            
+                        </a>
+
+                    {% endif %}
+
+
+                    <!-- Buy Now -->
+                    <a
+                        href="{% url 'product_detail' product.id %}"
+                        
+                    >
+                        <button class="buy-btn">
+                            Buy Now
+                        </button>
+                    </a>
+
+                {% else %}
+
+                    <button class="cart-btn" disabled>
+                        Out of Stock
+                    </button>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+        <h2>No Products Found</h2>
+
+    {% endfor %}
+
+</div>
+
+
+<!-- Pagination -->
+
+{% if products.paginator.num_pages > 1 %}
+
+<div class="pagination">
+
+    {% if products.has_previous %}
+
+        <a href="?page={{ products.previous_page_number }}">
+            ← Previous
+        </a>
+
+    {% endif %}
+
+
+    <span>
+        Page {{ products.number }}
+        of {{ products.paginator.num_pages }}
+    </span>
+
+
+    {% if products.has_next %}
+
+        <a href="?page={{ products.next_page_number }}">
+            Next →
+        </a>
+
+    {% endif %}
+
+</div>
+
+{% endif %}
+
+
+{% include 'footer.html' %}
+
+</body>
+</html>

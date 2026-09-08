@@ -1,0 +1,76 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Verify OTP - BuyT</title>
+
+    <link rel="stylesheet"
+          href="{% static 'login.css' %}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="login-box">
+
+        <h1>Verify OTP</h1>
+
+        <p>
+            Enter the 6-digit OTP sent to your email.
+        </p>
+
+        {% if message %}
+            <div class="signup-link">
+                <h5>{{ message }}</h5>
+            </div>
+        {% endif %}
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="input-box">
+
+                <label>OTP</label>
+
+                <input
+                    type="text"
+                    name="otp"
+                    placeholder="Enter 6-digit OTP"
+                    maxlength="6"
+                    required
+                >
+
+            </div>
+
+            <button type="submit">
+                Verify OTP
+            </button>
+
+        </form>
+
+        <div class="signup-link">
+
+            <a href="{% url 'forgot_password' %}">
+                Request New OTP
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

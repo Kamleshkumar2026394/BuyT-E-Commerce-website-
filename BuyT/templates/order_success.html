@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'order_success.css' %}">
+{% endblock %}
+{% block content %}
+
+<div class="success-container">
+
+    <h1>
+        🎉 Order Placed Successfully!
+    </h1>
+
+
+    <h2>
+        Order #{{ order.id }}
+    </h2>
+
+
+    <p>
+        Thank you,
+        {{ order.user.Full_Name }}
+    </p>
+
+
+    <p>
+        Total Amount:
+        <strong>
+            ₹{{ order.total_amount }}
+        </strong>
+    </p>
+
+
+    <p>
+        Payment Method:
+        {{ order.get_payment_method_display }}
+    </p>
+
+
+    <p>
+        Payment Status:
+        {{ order.get_payment_status_display }}
+    </p>
+
+
+    <p>
+        Order Status:
+        {{ order.get_order_status_display }}
+    </p>
+
+
+    <p>
+        Ordered on:
+        {{ order.created_at }}
+    </p>
+
+
+    <br>
+
+
+    <a href="{% url 'orders' %}">
+        View My Orders
+    </a>
+
+
+    <br><br>
+
+
+    <a href="{% url 'products' %}">
+        Continue Shopping
+    </a>
+
+</div>
+
+{% endblock %}

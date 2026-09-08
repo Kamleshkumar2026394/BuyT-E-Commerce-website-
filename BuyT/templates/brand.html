@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'brands.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="brand-section">
+
+    <h1>Shop By Brand</h1>
+    <p class="subtitle">Choose your favorite brand</p>
+
+    <div class="brand-container">
+
+        {% for brand in brands %}
+
+        <div class="brand-card">
+
+            <div class="brand-image">
+                <img src="{{brand.brand_image}}" alt="{{ brand.brand_name }}">
+            </div>
+
+            <div class="brand-info">
+                <h2>{{ brand.brand_name }}</h2>
+
+                <a href="{% url 'brand_products' brand.id %}" class="view-btn">
+                    View Products
+                </a>
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <h2>No Brands Available</h2>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

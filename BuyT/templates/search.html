@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Products</title>
+    <link rel="stylesheet" href="{% static 'search.css' %}">
+    
+</head>
+
+<body>
+
+{% include 'navbar.html' %}
+
+<div class="container">
+
+    {% if query %}
+        <h2>Search results for "{{ query }}"</h2>
+    {% else %}
+        <h2>Search Products</h2>
+    {% endif %}
+
+
+    {% if products %}
+
+        <div class="product-grid">
+
+            {% for item in products %}
+
+                <div class="product-card">
+
+                    {% if item.image %}
+
+                        <img
+                            src="{{ item.image }}"
+                            alt="{{ item.name }}"
+                            loading="lazy"
+                        >
+
+                    {% endif %}
+
+
+                    <h3>{{ item.name }}</h3>
+
+                    <p>
+                        {{ item.description|truncatechars:80 }}
+                    </p>
+
+                    <p>
+                        ₹{{ item.price }}
+                    </p>
+
+                    <p>
+                        Brand:
+                        {{ item.brand.brand_name }}
+                    </p>
+
+                    <p>
+                        Category:
+                        {{ item.category.category_name }}
+                    </p>
+
+                    <p>
+                        ⭐ {{ item.rating }}
+                        ({{ item.reviews }} Reviews)
+                    </p>
+
+
+                    {% if item.stock > 0 %}
+
+                        <a href="{% url 'add_to_cart' item.id %}">
+                            Add to Cart
+                        </a>
+
+                    {% else %}
+
+                        <button disabled>
+                            Out of Stock
+                        </button>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- Search Pagination -->
+
+        {% if products.paginator.num_pages > 1 %}
+
+        <div class="pagination">
+
+            {% if products.has_previous %}
+
+                <a href="?q={{ query }}&page={{ products.previous_page_number }}">
+                    ← Previous
+                </a>
+
+            {% endif %}
+
+
+            <span>
+                Page {{ products.number }}
+                of {{ products.paginator.num_pages }}
+            </span>
+
+
+            {% if products.has_next %}
+
+                <a href="?q={{ query }}&page={{ products.next_page_number }}">
+                    Next →
+                </a>
+
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
+
+    {% elif query %}
+
+        <p>No products found for "{{ query }}".</p>
+
+    {% else %}
+
+        <p>Enter a product name to search.</p>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Products</title>
+
+    <link rel="stylesheet" href="{% static 'wishlist.css' %}">
+</head>
+
+<body>
+
+{% include 'navbar.html' %}
+
+<div class="wishlist-container">
+
+    <div class="wishlist-header">
+        <h1>My Wishlist ❤️</h1>
+        <p>Products you've saved for later</p>
+    </div>
+
+
+    {% if wishlist_items %}
+
+        <div class="wishlist-grid">
+
+            {% for item in wishlist_items %}
+
+                <div class="wishlist-card">
+
+                    <!-- Product Image -->
+                    <div class="wishlist-image">
+
+                        {% if item.product.image %}
+                            <img
+                                src="{{ item.product.image }}"
+                                alt="{{ item.product.product_name }}"
+                                loading="lazy"
+                            >
+                        {% else %}
+                            <div class="no-image">
+                                No Image
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Product Details -->
+                    <div class="wishlist-details">
+
+                        <h2>
+                            {{ item.product.product_name }}
+                        </h2>
+
+                        {% if item.product.brand %}
+                            <p class="brand">
+                                {{ item.product.brand.brand_name }}
+                            </p>
+                        {% endif %}
+
+                        <p class="description">
+                            {{ item.product.description|truncatechars:100 }}
+                        </p>
+
+                        <div class="price">
+                            ₹{{ item.product.price }}
+                        </div>
+
+
+                        {% if item.product.rating %}
+                            <div class="rating">
+                                ⭐ {{ item.product.rating }}
+                            </div>
+                        {% endif %}
+
+
+                        <!-- Buttons -->
+                        <div class="wishlist-actions">
+
+                            <a
+                                href="{% url 'product_detail' item.product.id %}"
+                                class="view-btn"
+                            >
+                                View Product
+                            </a>
+
+                            <a
+                                href="{% url 'remove_from_wishlist' item.product.id %}"
+                                class="remove-btn"
+                            >
+                                ❤️ Remove
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <!-- Empty Wishlist -->
+
+        <div class="empty-wishlist">
+
+            <div class="empty-heart">
+                🤍
+            </div>
+
+            <h2>Your Wishlist is Empty</h2>
+
+            <p>
+                You haven't added any products to your wishlist yet.
+            </p>
+
+            <a
+                href="{% url 'products' %}"
+                class="shop-btn"
+            >
+                Continue Shopping
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

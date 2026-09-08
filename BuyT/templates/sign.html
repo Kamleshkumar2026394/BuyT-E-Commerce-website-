@@ -1,0 +1,423 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>BuyT Signup</title>
+
+    <link rel="stylesheet"
+          href="{% static 'signup.css' %}">
+
+</head>
+
+<body>
+
+{% if messages %}
+
+    {% for message in messages %}
+
+        <p style="color:red;">
+            {{ message }}
+        </p>
+
+    {% endfor %}
+
+{% endif %}
+
+
+<div class="container">
+
+    <h2>BuyT</h2>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <h3>Sign Up</h3>
+
+
+        <!-- FULL NAME -->
+
+        <div class="input-box">
+
+            <label>Full Name</label>
+
+            <input
+                type="text"
+                name="fullname"
+                placeholder="Enter Full Name"
+                required
+            >
+
+        </div>
+
+
+        <!-- EMAIL -->
+
+        <div class="input-box">
+
+            <label>Email Address</label>
+
+            <div class="verify-box">
+
+                <input
+                    type="email"
+                    name="email"
+                    id="signup-email"
+                    placeholder="Enter Email"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="otp-btn"
+                    id="send-otp-btn"
+                    onclick="sendSignupOTP()"
+                >
+                    Send OTP
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- OTP -->
+
+        <div
+            class="input-box"
+            id="otp-section"
+            style="display:none;"
+        >
+
+            <label>Email OTP</label>
+
+            <div class="verify-box">
+
+                <input
+                    type="text"
+                    id="signup-otp"
+                    placeholder="Enter 6 digit OTP"
+                    maxlength="6"
+                >
+
+                <button
+                    type="button"
+                    class="otp-btn"
+                    onclick="verifySignupOTP()"
+                >
+                    Verify OTP
+                </button>
+
+            </div>
+
+            <p id="otp-message"></p>
+
+        </div>
+
+
+        <!-- PHONE -->
+
+        <div class="input-box">
+
+            <label>Phone Number</label>
+
+            <input
+                type="tel"
+                name="phone"
+                placeholder="Enter Phone Number"
+                required
+            >
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="input-box">
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                name="password"
+                required
+            >
+
+        </div>
+
+
+        <!-- CONFIRM PASSWORD -->
+
+        <div class="input-box">
+
+            <label>Confirm Password</label>
+
+            <input
+                type="password"
+                name="confirm_password"
+                required
+            >
+
+        </div>
+
+
+        <!-- CREATE ACCOUNT -->
+
+        <button
+            type="submit"
+            class="signup-btn"
+            id="signup-btn"
+            disabled
+        >
+            Create Account
+        </button>
+
+
+        <div class="login-section">
+
+            <p>Already have an account?</p>
+
+            <a
+                href="{% url 'login' %}"
+                class="login-btn"
+            >
+                Login
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<script>
+
+function getCSRFToken() {
+
+    return document.querySelector(
+        '[name=csrfmiddlewaretoken]'
+    ).value;
+
+}
+
+
+function sendSignupOTP() {
+
+    const email =
+        document.getElementById(
+            "signup-email"
+        ).value.trim();
+
+    if (!email) {
+
+        alert("Please enter your email.");
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "send-otp-btn"
+        );
+
+    button.disabled = true;
+
+    button.innerText = "Sending...";
+
+
+    fetch(
+        "{% url 'send_signup_otp' %}",
+        {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type":
+                    "application/x-www-form-urlencoded",
+
+                "X-CSRFToken":
+                    getCSRFToken()
+
+            },
+
+            body:
+                "email=" +
+                encodeURIComponent(email)
+
+        }
+
+    )
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        if (data.success) {
+
+            document.getElementById(
+                "otp-section"
+            ).style.display = "block";
+
+            document.getElementById(
+                "otp-message"
+            ).style.color = "green";
+
+            document.getElementById(
+                "otp-message"
+            ).innerText =
+                data.message;
+
+        }
+        else {
+
+            alert(data.message);
+
+            button.disabled = false;
+
+        }
+
+        button.innerText = "Send OTP";
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        alert("Something went wrong.");
+
+        button.disabled = false;
+
+        button.innerText = "Send OTP";
+
+    });
+
+}
+
+
+function verifySignupOTP() {
+
+    const email =
+        document.getElementById(
+            "signup-email"
+        ).value.trim();
+
+    const otp =
+        document.getElementById(
+            "signup-otp"
+        ).value.trim();
+
+
+    if (!otp) {
+
+        alert("Please enter OTP.");
+
+        return;
+
+    }
+
+
+    fetch(
+        "{% url 'verify_signup_otp' %}",
+        {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type":
+                    "application/x-www-form-urlencoded",
+
+                "X-CSRFToken":
+                    getCSRFToken()
+
+            },
+
+            body:
+                "email=" +
+                encodeURIComponent(email) +
+                "&otp=" +
+                encodeURIComponent(otp)
+
+        }
+
+    )
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        const message =
+            document.getElementById(
+                "otp-message"
+            );
+
+
+        if (data.success) {
+
+            message.style.color = "green";
+
+            message.innerText =
+                "✓ " + data.message;
+
+
+            // Disable email after verification
+
+            document.getElementById(
+                "signup-email"
+            ).readOnly = true;
+
+
+            // Disable OTP
+
+            document.getElementById(
+                "signup-otp"
+            ).disabled = true;
+
+
+            // Enable signup
+
+            document.getElementById(
+                "signup-btn"
+            ).disabled = false;
+
+
+        }
+        else {
+
+            message.style.color = "red";
+
+            message.innerText =
+                data.message;
+
+        }
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        alert("Something went wrong.");
+
+    });
+
+}
+
+</script>
+
+</body>
+
+</html>

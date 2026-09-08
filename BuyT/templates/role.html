@@ -1,0 +1,64 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BuyT</title>
+
+    <link rel="stylesheet" href="{% static 'role.css' %}">
+</head>
+
+<body>
+
+    <div class="role-container">
+
+        <div class="role-card">
+
+            <h1>Welcome to BuyT</h1>
+
+            <p>Please select your account type</p>
+
+            <div class="roles">
+
+                <!-- USER -->
+                <a href="{% url 'login' %}" class="role user">
+
+                    <div class="icon">
+                        👤
+                    </div>
+
+                    <h2>User</h2>
+
+                    <p>
+                        Shop products and manage your orders
+                    </p>
+
+                </a>
+
+
+                <!-- ADMIN -->
+                <a href="{% url 'admin_login' %}" class="role admin">
+
+                    <div class="icon">
+                        🛠️
+                    </div>
+
+                    <h2>Admin</h2>
+
+                    <p>
+                        Manage products, orders and users
+                    </p>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

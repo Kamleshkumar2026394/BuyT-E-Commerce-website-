@@ -1,0 +1,228 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Brands - BuyT Admin</title>
+
+    <link rel="stylesheet"
+          href="{% static 'admin.css' %}">
+
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            BuyT
+            <span>Admin</span>
+        </div>
+
+        <nav>
+
+            <a href="{% url 'admin_dashboard' %}">
+                📊 Dashboard
+            </a>
+
+            <a href="{% url 'admin_users' %}">
+                👤 Users
+            </a>
+
+            <a href="{% url 'admin_products' %}">
+                📦 Products
+            </a>
+
+            <a href="{% url 'admin_categories' %}">
+                🏷️ Categories
+            </a>
+
+            <a href="{% url 'admin_brands' %}" class="active">
+                🔖 Brands
+            </a>
+
+            <a href="{% url 'admin_orders' %}">
+                🛒 Orders
+            </a>
+
+            <a href="{% url 'admin_payments' %}">
+                💳 Payments
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="#">
+                ⚙️ Settings
+            </a>
+
+            <a href="{% url 'admin_logout' %}">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <main class="main-content">
+        <button class="admin-menu-btn" id="adminMenuBtn">
+                ☰
+        </button>
+        <header class="topbar">
+
+            <div class="dash">
+
+                <h1>Brands</h1>
+
+                <p>Manage product brands</p>
+
+            </div>
+
+        </header>
+
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+        <section class="section">
+
+            <div class="section-header">
+
+                <h2>All Brands</h2>
+
+                <a
+                    href="{% url 'addbrand' %}"
+                    class="btn btn-primary">
+
+                    ➕ Add Brand
+
+                </a>
+
+            </div>
+
+
+            <div class="cards-grid">
+
+                {% for item in brands %}
+
+                    <div class="item-card">
+
+                        {% if item.brand_image %}
+
+                            <img
+                                src="{{ item.brand_image.url }}"
+                                class="item-image"
+                                alt="{{ item.brand_name }}"
+                            >
+
+                        {% else %}
+
+                            <div class="item-image no-image">
+                                No Image
+                            </div>
+
+                        {% endif %}
+
+
+                        <h3>
+                            {{ item.brand_name }}
+                        </h3>
+
+
+                        <p>
+                            Brand ID: {{ item.id }}
+                        </p>
+
+
+                        <div class="card-actions">
+
+                            <a
+                                href="{% url 'update_brand' item.id %}"
+                                class="btn btn-edit">
+
+                                ✏️ Edit
+
+                            </a>
+
+                            <a
+                                href="{% url 'delete_brand' item.id %}"
+                                class="btn btn-delete"
+                                onclick="return confirm('Delete this brand?');">
+
+                                🗑️ Delete
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                {% empty %}
+
+                    <p class="empty">
+                        No brands found.
+                    </p>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+<div class="admin-overlay" id="adminOverlay"></div>
+<script>
+    const adminMenuBtn = document.getElementById("adminMenuBtn");
+    const sidebar = document.querySelector(".sidebar");
+    const adminOverlay = document.getElementById("adminOverlay");
+
+    adminMenuBtn.addEventListener("click", function () {
+
+        sidebar.classList.toggle("active");
+        adminMenuBtn.classList.toggle("sidebar-open");
+        adminOverlay.classList.toggle("active");
+
+        if (sidebar.classList.contains("active")) {
+            adminMenuBtn.innerHTML = "✕";
+        } else {
+            adminMenuBtn.innerHTML = "☰";
+        }
+
+    });
+
+    adminOverlay.addEventListener("click", function () {
+
+        sidebar.classList.remove("active");
+        adminOverlay.classList.remove("active");
+
+        adminMenuBtn.innerHTML = "☰";
+
+    });
+</script>
+
+</body>
+
+</html>

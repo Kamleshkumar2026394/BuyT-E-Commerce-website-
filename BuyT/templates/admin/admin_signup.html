@@ -1,0 +1,430 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>BuyT Admin Signup</title>
+
+    <link rel="stylesheet"
+          href="{% static 'admin_signup.css' %}">
+
+</head>
+
+<body>
+
+<div class="admin-signup-container">
+
+<div class="admin-signup-box">
+
+<h1>BuyT Admin</h1>
+
+<p>Create Admin Account</p>
+
+
+{% if message %}
+
+<div class="error-message">
+
+    {{ message }}
+
+</div>
+
+{% endif %}
+
+
+<form method="POST">
+
+{% csrf_token %}
+
+
+<!-- NAME -->
+
+<div class="input-group">
+
+<label>Name</label>
+
+<input
+    type="text"
+    name="name"
+    placeholder="Enter admin name"
+    required
+>
+
+</div>
+
+
+<!-- EMAIL -->
+
+<div class="input-group">
+
+<label>Email</label>
+
+<div class="verify-box">
+
+<input
+    type="email"
+    name="email"
+    id="admin-email"
+    placeholder="Enter admin email"
+    required
+>
+
+<button
+    type="button"
+    class="otp-btn"
+    id="admin-send-otp"
+    onclick="sendAdminOTP()"
+>
+    Send OTP
+</button>
+
+</div>
+
+</div>
+
+
+<!-- OTP -->
+
+<div
+    class="input-group"
+    id="admin-otp-section"
+    style="display:none;"
+>
+
+<label>Email OTP</label>
+
+<div class="verify-box">
+
+<input
+    type="text"
+    id="admin-otp"
+    placeholder="Enter 6 digit OTP"
+    maxlength="6"
+>
+
+<button
+    type="button"
+    class="otp-btn"
+    onclick="verifyAdminOTP()"
+>
+    Verify OTP
+</button>
+
+</div>
+
+<p id="admin-otp-message"></p>
+
+</div>
+
+
+<!-- PASSWORD -->
+
+<div class="input-group">
+
+<label>Password</label>
+
+<input
+    type="password"
+    name="password"
+    placeholder="Enter password"
+    required
+>
+
+</div>
+
+
+<!-- CONFIRM PASSWORD -->
+
+<div class="input-group">
+
+<label>Confirm Password</label>
+
+<input
+    type="password"
+    name="confirm_password"
+    placeholder="Confirm password"
+    required
+>
+
+</div>
+
+
+<!-- CREATE ADMIN -->
+
+<button
+    type="submit"
+    id="admin-signup-btn"
+    disabled
+>
+    Create Admin Account
+</button>
+
+
+</form>
+
+
+<div class="admin-links">
+
+<p>
+
+Already have an account?
+
+<a href="{% url 'admin_login' %}">
+    Login
+</a>
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+function getCSRFToken() {
+
+    return document.querySelector(
+        '[name=csrfmiddlewaretoken]'
+    ).value;
+
+}
+
+
+function sendAdminOTP() {
+
+    const email =
+        document.getElementById(
+            "admin-email"
+        ).value.trim();
+
+
+    if (!email) {
+
+        alert(
+            "Please enter your email."
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "admin-send-otp"
+        );
+
+
+    button.disabled = true;
+
+    button.innerText = "Sending...";
+
+
+    fetch(
+        "{% url 'send_admin_signup_otp' %}",
+        {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type":
+                    "application/x-www-form-urlencoded",
+
+                "X-CSRFToken":
+                    getCSRFToken()
+
+            },
+
+            body:
+                "email=" +
+                encodeURIComponent(email)
+
+        }
+
+    )
+
+    .then(response =>
+        response.json()
+    )
+
+    .then(data => {
+
+        if (data.success) {
+
+            document.getElementById(
+                "admin-otp-section"
+            ).style.display = "block";
+
+
+            document.getElementById(
+                "admin-otp-message"
+            ).style.color = "green";
+
+
+            document.getElementById(
+                "admin-otp-message"
+            ).innerText =
+                data.message;
+
+        }
+        else {
+
+            alert(
+                data.message
+            );
+
+            button.disabled = false;
+
+        }
+
+
+        button.innerText = "Send OTP";
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        alert(
+            "Something went wrong."
+        );
+
+        button.disabled = false;
+
+        button.innerText = "Send OTP";
+
+    });
+
+}
+
+
+function verifyAdminOTP() {
+
+    const email =
+        document.getElementById(
+            "admin-email"
+        ).value.trim();
+
+
+    const otp =
+        document.getElementById(
+            "admin-otp"
+        ).value.trim();
+
+
+    if (!otp) {
+
+        alert(
+            "Please enter OTP."
+        );
+
+        return;
+
+    }
+
+
+    fetch(
+        "{% url 'verify_admin_signup_otp' %}",
+        {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type":
+                    "application/x-www-form-urlencoded",
+
+                "X-CSRFToken":
+                    getCSRFToken()
+
+            },
+
+            body:
+                "email=" +
+                encodeURIComponent(email) +
+                "&otp=" +
+                encodeURIComponent(otp)
+
+        }
+
+    )
+
+    .then(response =>
+        response.json()
+    )
+
+    .then(data => {
+
+        const message =
+            document.getElementById(
+                "admin-otp-message"
+            );
+
+
+        if (data.success) {
+
+            message.style.color =
+                "green";
+
+            message.innerText =
+                "✓ " + data.message;
+
+
+            // Lock email
+
+            document.getElementById(
+                "admin-email"
+            ).readOnly = true;
+
+
+            // Disable OTP
+
+            document.getElementById(
+                "admin-otp"
+            ).disabled = true;
+
+
+            // Enable signup
+
+            document.getElementById(
+                "admin-signup-btn"
+            ).disabled = false;
+
+        }
+        else {
+
+            message.style.color =
+                "red";
+
+            message.innerText =
+                data.message;
+
+        }
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        alert(
+            "Something went wrong."
+        );
+
+    });
+
+}
+
+</script>
+
+</body>
+
+</html>
