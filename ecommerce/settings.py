@@ -30,7 +30,12 @@ DEBUG = os.getenv("DEBUG", "True") == "True"
 
 if DEBUG:
     ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-
+else:
+    ALLOWED_HOSTS = [
+       
+        "buyt-ta3n.onrender.com",
+    
+    ]
 
 
 # Application definition

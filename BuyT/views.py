@@ -918,10 +918,7 @@ def chat_api(request):
 
 
 
-print(
-    "GEMINI API KEY LOADED:",
-    bool(os.getenv("GEMINI_API_KEY"))
-)
+
 
 def test_ai(request):
     answer = ask_ai("Hello, introduce yourself as a shopping assistant for BuyT.")
