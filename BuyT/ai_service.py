@@ -11,18 +11,22 @@ api_key = os.getenv("GEMINI_API_KEY")
 
 print("Gemini API key loaded:", bool(api_key))
 
+if not api_key:
+    raise ValueError("GEMINI_API_KEY is not configured.")
+
 client = genai.Client(
     api_key=api_key,
     http_options={
-        "timeout": 20000
+        "timeout": 60000
     }
 )
 
 
 def ask_ai(prompt):
     try:
+
         response = client.models.generate_content(
-            model="gemini-3.6-flash",
+            model="gemini-3.5-flash-lite",
             contents=prompt
         )
 
@@ -32,5 +36,10 @@ def ask_ai(prompt):
         return "Sorry, I couldn't generate a response."
 
     except Exception as e:
+
+        print("====================================")
         print("GEMINI AI ERROR:", repr(e))
-        raise
+        print("ERROR TYPE:", type(e).__name__)
+        print("====================================")
+
+        return "Sorry, the BuyT AI assistant is temporarily unavailable."

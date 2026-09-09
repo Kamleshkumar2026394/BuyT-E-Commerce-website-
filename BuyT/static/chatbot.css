@@ -312,3 +312,10 @@
     }
 
 }
+
+@media (max-width: 768px) {
+    .theme-btn {
+        bottom: 5px !important;
+        right: 120px !important;
+    }
+}

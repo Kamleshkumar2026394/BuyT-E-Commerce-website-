@@ -161,9 +161,14 @@
 
                     {% endif %}
 
-    <button type="button" class="buy-btn">
-        Buy Now
-    </button>
+                    <a
+                        href="{% url 'product_detail' product.id %}"
+                        
+                    >
+                        <button class="buy-btn">
+                            Buy Now
+                        </button>
+                    </a>
 
 </div>
 

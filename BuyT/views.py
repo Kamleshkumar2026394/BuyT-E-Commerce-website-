@@ -965,6 +965,7 @@ def test_ai(request):
 @require_POST
 def chat_ai(request):
     try:
+        # Get user message
         data = json.loads(request.body)
         message = data.get("message", "").strip()
 
@@ -973,14 +974,49 @@ def chat_ai(request):
                 {"error": "Message is required"},
                 status=400
             )
+        user_name = request.session.get("user_name", "there")
 
-        # Search products based on user's question
-        products = product.objects.select_related(
-            "brand",
-            "category"
-        ).all()
+        greeting_words = [
+    "hi",
+    "hello",
+    "hey",
+    "good morning",
+    "good afternoon",
+    "good evening",
+    "good night"
+]
 
-        # Build website context
+        is_greeting = message.lower().strip() in greeting_words
+        # -----------------------------------------
+        # SEARCH ONLY RELEVANT PRODUCTS
+        # -----------------------------------------
+
+        from django.db.models import Q
+
+        search_words = message.lower().split()
+
+        query = Q()
+
+        for word in search_words:
+            if len(word) < 3:
+                continue
+
+            query |= Q(name__icontains=word)
+            query |= Q(description__icontains=word)
+            query |= Q(brand__brand_name__icontains=word)
+            query |= Q(category__category_name__icontains=word)
+
+        products = (
+            product.objects
+            .select_related("brand", "category")
+            .filter(query)
+            .distinct()[:15]
+        )
+
+        # -----------------------------------------
+        # BUILD PRODUCT CONTEXT
+        # -----------------------------------------
+
         product_context = ""
 
         for p in products:
@@ -997,31 +1033,53 @@ Reviews: {p.reviews}
 -------------------------
 """
 
-        # Send website information to AI
+        # -----------------------------------------
+        # IF NO PRODUCTS FOUND
+        # -----------------------------------------
+
+        if not product_context:
+            product_context = """
+No specific matching products were found in the BuyT database.
+"""
+        if is_greeting:
+            name_instruction = f"""
+The customer is greeting you.
+Greet the customer using their name: {user_name}.
+Use their name only once in this response.
+"""
+        else:
+            name_instruction = """
+The customer is not greeting you.
+DO NOT mention the customer's name.
+"""
+        # -----------------------------------------
+        # AI PROMPT
+        # -----------------------------------------
+
         prompt = f"""
-You are the official AI shopping assistant for BuyT.
+You are BuyT's AI shopping assistant.
 
-You are answering questions about the BuyT e-commerce website.
+{name_instruction}
 
-IMPORTANT RULES:
-1. Answer based ONLY on the BuyT website information provided below.
-2. Do not invent products.
-3. Do not invent prices.
-4. Do not invent stock.
-5. If a product is not available in the provided data, clearly say that it is not available.
-6. Be helpful and conversational.
-7. If the user asks for product recommendations, recommend products from the provided data.
-8. Mention price, brand, category, rating and stock when useful.
+IMPORTANT:
+- Never invent products, prices, brands, stock, ratings, or reviews.
+- Answer product questions only using the product data provided below.
+- Keep responses short, friendly and conversational.
+- Do not mention information that is not provided in the product data.
 
-BUY T WEBSITE PRODUCT DATA:
-
+PRODUCT DATA:
 {product_context}
 
-USER QUESTION:
+CUSTOMER MESSAGE:
 {message}
 
-Give a helpful answer based on the BuyT website.
+Give a helpful response.
 """
+
+
+        # -----------------------------------------
+        # CALL GEMINI
+        # -----------------------------------------
 
         answer = ask_ai(prompt)
 
@@ -1029,11 +1087,17 @@ Give a helpful answer based on the BuyT website.
             "answer": answer
         })
 
+    except json.JSONDecodeError:
+        return JsonResponse(
+            {"error": "Invalid request data."},
+            status=400
+        )
+
     except Exception as e:
-        print("CHAT AI ERROR:", e)
+        print("CHAT AI ERROR:", repr(e))
 
         return JsonResponse(
-            {"error": "Something went wrong with the AI assistant."},
+            {"error": "Sorry, the BuyT AI assistant is temporarily unavailable."},
             status=500
         )
 
