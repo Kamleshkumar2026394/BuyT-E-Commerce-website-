@@ -11,13 +11,26 @@ api_key = os.getenv("GEMINI_API_KEY")
 
 print("Gemini API key loaded:", bool(api_key))
 
-client = genai.Client(api_key=api_key)
+client = genai.Client(
+    api_key=api_key,
+    http_options={
+        "timeout": 20000
+    }
+)
 
 
 def ask_ai(prompt):
-    response = client.models.generate_content(
-        model="gemini-3.6-flash",
-        contents=prompt
-    )
+    try:
+        response = client.models.generate_content(
+            model="gemini-3.6-flash",
+            contents=prompt
+        )
 
-    return response.text
+        if response and response.text:
+            return response.text
+
+        return "Sorry, I couldn't generate a response."
+
+    except Exception as e:
+        print("GEMINI AI ERROR:", repr(e))
+        raise
