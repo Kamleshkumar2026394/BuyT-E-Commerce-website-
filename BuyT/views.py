@@ -17,7 +17,41 @@ from .ai_service import ask_ai
 from django.views.decorators.http import require_POST
 from functools import wraps
 from django.conf import settings
+import requests
 # Create your views here.
+
+
+
+def send_email_via_brevo(subject, body, to_email, reply_to=None):
+    url = "https://api.brevo.com/v3/smtp/email"
+
+    headers = {
+        "api-key": settings.BREVO_API_KEY,
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+    }
+
+    payload = {
+        "sender": {
+            "email": settings.DEFAULT_FROM_EMAIL,
+            "name": "BuyT"
+        },
+        "to": [{"email": to_email}],
+        "subject": subject,
+        "textContent": body,
+    }
+
+    if reply_to:
+        payload["replyTo"] = {"email": reply_to}
+
+    response = requests.post(url, json=payload, headers=headers, timeout=10)
+
+    if response.status_code != 201:
+        raise Exception(
+            f"Brevo send failed: {response.status_code} {response.text}"
+        )
+
+    return True
 
 
 def login_required_custom(view_func):
@@ -140,9 +174,9 @@ def send_signup_otp(request):
     # Send email
     try:
 
-        email_message = EmailMessage(
-            subject="BuyT Email Verification OTP",
-            body=f"""
+        send_email_via_brevo(
+    subject="BuyT Email Verification OTP",
+    body=f"""
 Hello,
 
 Your BuyT email verification OTP is:
@@ -156,11 +190,8 @@ Please enter this OTP on the BuyT signup page.
 Regards,
 BuyT Team
 """,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[email],
-        )
-
-        email_message.send(fail_silently=False)
+    to_email=email,
+)
 
     except Exception as e:
 
@@ -327,15 +358,12 @@ Message:
 {message}
 """
 
-        email = EmailMessage(
+        send_email_via_brevo(
     subject="New Message from BuyT User",
     body=email_body,
-    from_email=settings.DEFAULT_FROM_EMAIL,
-    to=[settings.DEFAULT_FROM_EMAIL],
-    reply_to=[user.Email],
+    to_email=settings.DEFAULT_FROM_EMAIL,
+    reply_to=user.Email,
 )
-
-        email.send()
 
         messages.success(
             request,
@@ -1326,15 +1354,12 @@ def forgot_password(request):
         # Generate 6 digit OTP
         otp = str(random.randint(100000, 999999))
 
-        # Store OTP in session
-        request.session["reset_email"] = email
-        request.session["reset_otp"] = otp
-        request.session["reset_otp_time"] = time.time()
-
         # Send OTP
-        email_message = EmailMessage(
-            subject="BuyT Password Reset OTP",
-            body=f"""
+        try:
+
+            send_email_via_brevo(
+                subject="BuyT Password Reset OTP",
+                body=f"""
 Hello {user.Full_Name},
 
 Your BuyT password reset OTP is:
@@ -1348,11 +1373,25 @@ If you did not request a password reset, please ignore this email.
 Regards,
 BuyT Team
 """,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[email],
-        )
+                to_email=email,
+            )
 
-        email_message.send()
+        except Exception as e:
+
+            print("FORGOT PASSWORD OTP EMAIL ERROR:", repr(e))
+
+            return render(
+                request,
+                "forgot_password.html",
+                {
+                    "message": "Unable to send OTP. Please try again later."
+                }
+            )
+
+        # Store OTP in session ONLY after email was successfully sent
+        request.session["reset_email"] = email
+        request.session["reset_otp"] = otp
+        request.session["reset_otp_time"] = time.time()
 
         return redirect("verify_otp")
 
@@ -1519,16 +1558,12 @@ def admin_forgot_password(request):
             random.randint(100000, 999999)
         )
 
-        # Store admin password reset information in session
-        request.session["admin_reset_email"] = email
-        request.session["admin_reset_otp"] = otp
-        request.session["admin_reset_otp_time"] = time.time()
-
         # Send OTP email
-        email_message = EmailMessage(
-            subject="BuyT Admin Password Reset OTP",
+        try:
 
-            body=f"""
+            send_email_via_brevo(
+                subject="BuyT Admin Password Reset OTP",
+                body=f"""
 Hello {admin.name},
 
 Your BuyT Admin password reset OTP is:
@@ -1542,13 +1577,25 @@ If you did not request a password reset, please ignore this email.
 Regards,
 BuyT Team
 """,
+                to_email=email,
+            )
 
-            from_email=settings.DEFAULT_FROM_EMAIL,
+        except Exception as e:
 
-            to=[email],
-        )
+            print("ADMIN FORGOT PASSWORD OTP EMAIL ERROR:", repr(e))
 
-        email_message.send()
+            return render(
+                request,
+                "admin/admin_forgot_password.html",
+                {
+                    "message": "Unable to send OTP. Please try again later."
+                }
+            )
+
+        # Store admin password reset information in session
+        request.session["admin_reset_email"] = email
+        request.session["admin_reset_otp"] = otp
+        request.session["admin_reset_otp_time"] = time.time()
 
         return redirect("admin_verify_otp")
 
@@ -1772,17 +1819,12 @@ def send_admin_signup_otp(request):
         random.randint(100000, 999999)
     )
 
-    # Store in session
-    request.session["admin_signup_email"] = email
-    request.session["admin_signup_otp"] = otp
-    request.session["admin_signup_otp_time"] = time.time()
-
     # Send email
-    email_message = EmailMessage(
+    try:
 
-        subject="BuyT Admin Email Verification OTP",
-
-        body=f"""
+        send_email_via_brevo(
+            subject="BuyT Admin Email Verification OTP",
+            body=f"""
 Hello,
 
 Your BuyT Admin signup verification OTP is:
@@ -1796,13 +1838,22 @@ Please enter this OTP on the BuyT Admin Signup page.
 Regards,
 BuyT Team
 """,
+            to_email=email,
+        )
 
-        from_email=settings.DEFAULT_FROM_EMAIL,
+    except Exception as e:
 
-        to=[email],
-    )
+        print("ADMIN SIGNUP OTP EMAIL ERROR:", repr(e))
 
-    email_message.send()
+        return JsonResponse({
+            "success": False,
+            "message": "Unable to send OTP. Please try again later."
+        }, status=500)
+
+    # Store in session ONLY after email was successfully sent
+    request.session["admin_signup_email"] = email
+    request.session["admin_signup_otp"] = otp
+    request.session["admin_signup_otp_time"] = time.time()
 
     return JsonResponse({
         "success": True,
