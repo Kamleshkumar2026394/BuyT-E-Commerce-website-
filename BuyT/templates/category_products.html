@@ -1,9 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ category.category_name }}</title>
 
-    {% load static %}
+    
     <link rel="stylesheet" href="{% static 'categories2.css' %}">
 </head>
 <body>
@@ -38,7 +41,11 @@
 
     <p class="rating">⭐ {{ product.rating }} ({{ product.reviews }} Reviews)</p>
 
-    <button class="btn">Add to Cart</button>
+    <a href="{% url 'add_to_cart' product.id %}">
+                        <button class="btn">
+                            Add to Cart
+                        </button>
+                    </a>
 
 </div>
 
